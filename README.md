@@ -1,37 +1,53 @@
-# My Collection Skills
+# Skill World
 
-Kho lưu trữ cá nhân cho các bộ AI skills có thể tái sử dụng.
+A self-contained world of reusable AI skills with mandatory routing, provenance, and adoption history.
+
+> Intended repository name: `skill-world`. The current GitHub repository slug may remain `my-collection-skills` until it is renamed in GitHub repository settings.
 
 ## Mandatory routing
 
-`skills/skill-loader/SKILL.md` là entrypoint bắt buộc. Mọi skill downstream phải được chọn qua `skill-loader` trước khi được nạp hoặc áp dụng. Xem `AGENTS.md` và `skills/skill-loader/INDEX.md`.
+`skills/skill-loader/SKILL.md` is the exclusive entrypoint. Every downstream skill must be selected through `skill-loader` before being read or applied.
+
+Routing is hierarchical:
+
+```text
+skill-loader
+└── software-development
+    ├── design-ui
+    ├── planning-workflow
+    ├── implementation-orchestration
+    ├── debugging
+    ├── testing-verification
+    ├── code-review
+    ├── security
+    ├── git-delivery
+    └── skill-authoring-meta
+```
+
+Start at `skills/skill-loader/INDEX.md`; then read only the selected group index. `skills/skill-loader/CATALOG.jsonl` is a RAG-ready metadata projection for future retrieval at larger scale.
+
+## Current group: Software Development Skills
+
+All current downstream skills are grouped under **Software Development Skills**, including frontend design, planning/orchestration, debugging, testing, code review, security review, Git/delivery, and skill authoring/meta workflows.
 
 ## Self-contained collection
 
-Các downstream skill được lập chỉ mục phải nằm **trực tiếp trong repo này**. `skill-loader` không route sang personal mirror hoặc upstream repository để nạp skill lúc runtime. Upstream URL chỉ còn dùng cho attribution/provenance và kiểm tra phiên bản nguồn.
+Every indexed downstream skill must live directly in this repository. Upstream repositories are used only for provenance, licensing, source comparison, and refreshes — never as runtime dependencies.
 
 ## Provenance policy
 
-Mọi skill lấy từ một bộ skill gốc phải luôn giữ được thông tin **skill được lấy từ tác giả/bộ nguồn nào** trong source của repo này. Giữ `PROVENANCE.md` cạnh `SKILL.md`, gồm tối thiểu: original author, original collection/repository, upstream path, snapshot commit, license và trạng thái local modification. Không được làm mất attribution khi đổi tên, di chuyển, rút gọn hoặc điều chỉnh skill.
+Every third-party skill keeps the original author/collection, upstream path, snapshot commit, license, and local modification status in a sibling `PROVENANCE.md`. Reorganization must never erase attribution.
 
-## Collections
+## Adoption ledger
 
-### Anthropic
+`SKILL_REGISTRY.md` records each skill's import date, repository-star snapshot, skill-install snapshot, source author/collection, and original GitHub skill link. Snapshot metrics are historical metadata, not live counters.
 
-- `frontend-design` — lấy từ **Anthropic, PBC / `anthropics/skills`**. License và provenance nằm cùng thư mục skill.
+## Retrieval strategy
 
-### Matt Pocock
+Today the collection is small enough that deterministic tree routing is simpler and more reliable than deploying a vector database. The loader therefore uses:
+1. root tree index;
+2. group index;
+3. retrieval-friendly JSONL metadata;
+4. leaf skill only after selection.
 
-- `code-review` — lấy từ **Matt Pocock / `mattpocock/skills`**. License và provenance nằm cùng thư mục skill.
-
-### Jesse Vincent / obra — Superpowers
-
-14 skill từ **Jesse Vincent / obra / `obra/superpowers`** đã được vendored trực tiếp dưới `skills/` và không còn phụ thuộc `thanhtai-personal/superpowers` khi runtime nạp skill.
-
-Collection-level source metadata:
-- `skills/_sources/obra-superpowers/PROVENANCE.md`
-- `skills/_sources/obra-superpowers/LICENSE.txt`
-
-Mỗi skill Superpowers cũng có `PROVENANCE.md` riêng ghi upstream path, snapshot SHA và trạng thái local modification.
-
-Repo này là collection cá nhân; attribution, provenance và license của từng nguồn phải được giữ nguyên khi thêm collection mới.
+When Skill World grows to hundreds/thousands of skills, `CATALOG.jsonl` can feed lexical + embedding/hybrid retrieval without changing leaf skill layout. Add RAG only after measuring routing latency/recall problems rather than introducing infrastructure early.
