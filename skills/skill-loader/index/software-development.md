@@ -1,13 +1,15 @@
 # Software Development Skills
 
-Canonical leaf index for `software-development-skill`. Status and lifecycle ordering are defined by `skills/software-development-skill/SKILL.md`.
+Canonical leaf index for `software-development-skill`. Lifecycle ordering and strength semantics live in `skills/software-development-skill/SKILL.md`.
+
+`weak-skill` means provisional best available fit inside Skill World, not low upstream quality. The loader may use it, but should prefer a stronger accepted skill when equivalent coverage exists.
 
 ## Discover & clarify
 
 - `brainstorming` → `skills/brainstorming/SKILL.md` — Jesse Vincent / obra / `obra/superpowers`
 - `domain-modeling` → `skills/domain-modeling/SKILL.md` — Matt Pocock / `mattpocock/skills`
-- **EMPTY:** `requirements-engineering`
-- **EMPTY:** `acceptance-criteria-and-spec-writing`
+- **WEAK `weak-skill`:** `requirements-engineering` → `skills/prd/SKILL.md` — GitHub / `github/awesome-copilot`; PRD-oriented rather than full requirements engineering.
+- **WEAK `weak-skill`:** `acceptance-criteria-and-spec-writing` → `skills/prd/SKILL.md` — same local skill; measurable acceptance criteria are included, but rigorous spec engineering remains a replacement target.
 
 ## Design
 
@@ -15,8 +17,8 @@ Canonical leaf index for `software-development-skill`. Status and lifecycle orde
 - `codebase-design` → `skills/codebase-design/SKILL.md` — Matt Pocock / `mattpocock/skills`
 - `supabase-postgres-best-practices` → `skills/supabase-postgres-best-practices/SKILL.md` — Supabase / `supabase/agent-skills`
 - `security-and-hardening` → `skills/security-and-hardening/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
-- **PARTIAL:** broader `software-architecture`
-- **EMPTY:** `api-design`
+- **PARTIAL:** broader `software-architecture` — current coverage is module/interface-centric.
+- **WEAK `weak-skill`:** `api-design` → `skills/api-and-interface-design/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`; broad interface guidance rather than deep API governance.
 
 ## Plan
 
@@ -45,8 +47,8 @@ Canonical leaf index for `software-development-skill`. Status and lifecycle orde
 
 - `verification-before-completion` → `skills/verification-before-completion/SKILL.md` — Jesse Vincent / obra
 - `performance-optimization` → `skills/performance-optimization/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
-- **EMPTY:** `test-strategy`
-- **EMPTY:** `integration-contract-e2e-strategy`
+- **WEAK `weak-skill`:** `test-strategy` → `skills/test-gap-audit/SKILL.md` — GitHub / `github/awesome-copilot`; strong gap audit, incomplete as an organization-wide test strategy.
+- **WEAK `weak-skill`:** `integration-contract-e2e-strategy` → `skills/webapp-testing/SKILL.md` — GitHub / `github/awesome-copilot`; browser/E2E-heavy and does not fully cover service contract strategy.
 
 ## Review
 
@@ -64,19 +66,19 @@ Canonical leaf index for `software-development-skill`. Status and lifecycle orde
 - `ci-cd-and-automation` → `skills/ci-cd-and-automation/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
 - `finishing-a-development-branch` → `skills/finishing-a-development-branch/SKILL.md` — Jesse Vincent / obra
 - `shipping-and-launch` → `skills/shipping-and-launch/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
-- **PARTIAL:** `release-management`
+- **PARTIAL:** `release-management` — rollout/reversibility covered; release governance/versioning remains open.
 
 ## Operate & learn
 
 - `observability-and-instrumentation` → `skills/observability-and-instrumentation/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
 - `documentation-and-adrs` → `skills/documentation-and-adrs/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
-- **EMPTY:** `incident-response`
-- **EMPTY:** `production-diagnosis`
-- **EMPTY:** `postmortems`
+- **WEAK `weak-skill`:** `incident-response` → `skills/incident-runbook-templates/SKILL.md` — Seth Hobson / `wshobson/agents`; runbook-centric provisional response workflow.
+- **WEAK `weak-skill`:** `production-diagnosis` → `skills/diagnosing-bugs/SKILL.md` — Matt Pocock / `mattpocock/skills`; strong hard-bug diagnosis, partial fit for production operations.
+- **WEAK `weak-skill`:** `postmortems` → `skills/postmortem-writing/SKILL.md` — Seth Hobson / `wshobson/agents`; standalone blameless postmortem workflow, limited operational integration.
 
 ## Meta
 
 - `writing-skills` → `skills/writing-skills/SKILL.md` — Jesse Vincent / obra
 - `using-superpowers` → `skills/using-superpowers/SKILL.md` — Jesse Vincent / obra
 
-Every imported leaf keeps a sibling `PROVENANCE.md`. Empty slots are intentional roadmap nodes and MUST NOT be treated as loadable skills.
+Every imported leaf keeps a sibling `PROVENANCE.md`. Weak skills are fully loadable leaves but remain explicit replacement targets.

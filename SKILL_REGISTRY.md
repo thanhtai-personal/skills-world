@@ -1,6 +1,6 @@
 # Skill Registry
 
-Historical adoption ledger for Skill World. Popularity values are snapshots observed at adoption/registry time, not live counters. **Stars are repository-level; installs/downloads are skill-level counts from skills.sh unless noted.** Earlier imports from 2026-09-16 retain their same-day snapshots; new imports record 2026-09-17 observations.
+Historical adoption ledger for Skill World. Popularity values are snapshots observed at adoption/registry time, not live counters. **Stars are repository-level; installs/downloads are skill-level counts from skills.sh unless noted.** Earlier imports from 2026-09-16 retain their same-day snapshots; new imports record 2026-09-17 observations. `weak-skill` in Group means provisional Skill World fit, not low upstream quality.
 
 | Skill | Group | Imported at | Repo stars observed | Skill installs observed | Original GitHub skill | Source author/collection |
 |---|---|---:|---:|---:|---|---|
@@ -32,6 +32,13 @@ Historical adoption ledger for Skill World. Popularity values are snapshots obse
 | observability-and-instrumentation | software-development / implement-operate | 2026-09-17 (UTC+7) | 94.8K | 28.4K | https://github.com/addyosmani/agent-skills/tree/be4e44a9fbc5e8df0beaefadbb28bd22ee61cc39/skills/observability-and-instrumentation | Addy Osmani / `addyosmani/agent-skills` |
 | documentation-and-adrs | software-development / plan-operate | 2026-09-17 (UTC+7) | 94.8K | 36.3K | https://github.com/addyosmani/agent-skills/tree/be4e44a9fbc5e8df0beaefadbb28bd22ee61cc39/skills/documentation-and-adrs | Addy Osmani / `addyosmani/agent-skills` |
 | supabase-postgres-best-practices | software-development / design-implement | 2026-09-17 (UTC+7) | ~2.6K | 403.1K | https://github.com/supabase/agent-skills/tree/8331f910845103c08d51f6ca1d86ebb7d1f745e3/skills/supabase-postgres-best-practices | Supabase / `supabase/agent-skills` |
+| prd | software-development / discover / weak-skill | 2026-09-17 (UTC+7) | 39.0K | 23.1K | https://github.com/github/awesome-copilot/tree/9ce814859eaa473178a1463ee3aa0c54a8860b86/skills/prd | GitHub, Inc. / `github/awesome-copilot` |
+| api-and-interface-design | software-development / design / weak-skill | 2026-09-17 (UTC+7) | 94.8K | 34.5K | https://github.com/addyosmani/agent-skills/tree/be4e44a9fbc5e8df0beaefadbb28bd22ee61cc39/skills/api-and-interface-design | Addy Osmani / `addyosmani/agent-skills` |
+| test-gap-audit | software-development / verify / weak-skill | 2026-09-17 (UTC+7) | 39.0K | N/A (not surfaced in verified search) | https://github.com/github/awesome-copilot/tree/9ce814859eaa473178a1463ee3aa0c54a8860b86/skills/test-gap-audit | GitHub, Inc. / `github/awesome-copilot` |
+| webapp-testing | software-development / verify / weak-skill | 2026-09-17 (UTC+7) | 39.0K | 12.3K | https://github.com/github/awesome-copilot/tree/9ce814859eaa473178a1463ee3aa0c54a8860b86/skills/webapp-testing | GitHub, Inc. / `github/awesome-copilot` |
+| diagnosing-bugs | software-development / operate / weak-skill | 2026-09-17 (UTC+7) | 262.8K | 608.1K | https://github.com/mattpocock/skills/tree/959a8e9f1edc3adbe2f7e3054bb6fbefa6696260/skills/engineering/diagnosing-bugs | Matt Pocock / `mattpocock/skills` |
+| incident-runbook-templates | software-development / operate / weak-skill | 2026-09-17 (UTC+7) | 39.3K | 9.4K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/incident-response/skills/incident-runbook-templates | Seth Hobson / `wshobson/agents` |
+| postmortem-writing | software-development / operate / weak-skill | 2026-09-17 (UTC+7) | 39.3K | 9.3K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/incident-response/skills/postmortem-writing | Seth Hobson / `wshobson/agents` |
 
 ## Sources for popularity snapshots
 
