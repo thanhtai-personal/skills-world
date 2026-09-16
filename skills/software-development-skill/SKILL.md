@@ -1,264 +1,165 @@
 ---
 name: software-development-skill
-description: Mandatory orchestration skill for software-development requests. Runs after skill-loader, maps the request to the standard software-development lifecycle, and selects downstream software skills in lifecycle order.
+description: Mandatory orchestration skill for software-development requests. Runs after skill-loader, maps work to a standard software-development lifecycle, and selects downstream skills in lifecycle order.
 ---
 
 # Software Development Skill
 
-This is the **group-level orchestrator** for every software-development request in Skill World. It does not replace `skill-loader`; it is selected by `skill-loader` when the request belongs to the software-development world.
-
-## Position in the routing hierarchy
+This is the group-level orchestrator for all software-development work in Skill World. It runs after `skill-loader` and before any software-development leaf skill.
 
 ```text
 user request
-  ↓
-skill-loader
-  ↓
-software-development-skill
-  ↓
-software-development index
-  ↓
-selected downstream skills in lifecycle order
+→ skill-loader
+→ software-development-skill
+→ software-development index
+→ selected leaf skills in lifecycle order
 ```
 
-No software-development leaf skill should be loaded directly from the root loader. The loader first enters this wrapper, and this wrapper decides which software-development phases and leaf skills are relevant.
+Treat software development as a lifecycle, not a bag of unrelated skills. Enter at the earliest phase that is genuinely required for the user's task, then move forward. Do not force every phase, but do not silently skip an unresolved dependency.
 
-## Core rule
+## Capability status legend
 
-Treat software work as a lifecycle, not as a bag of independent skills.
-
-Use the **earliest relevant phase first**, then move forward. Do not load every skill mechanically. Skip phases that are genuinely irrelevant to the user's goal, but never execute a later phase in a way that silently assumes an earlier unresolved decision.
-
-When the user starts in the middle of the lifecycle (for example, "review this PR" or "debug this failing test"), enter at that phase, inspect enough upstream context to work safely, and continue only through phases relevant to the request.
+- **FILLED** — a selected local skill exists and is indexed.
+- **PARTIAL** — a local skill covers part of the capability but not the full professional scope.
+- **EMPTY** — the lifecycle slot is intentionally represented, but no candidate has been accepted yet. Do not improvise a nonexistent skill; use adjacent skills only for the parts they actually cover.
 
 ## Standard software-development lifecycle
 
 ### Phase 1 — Discover & clarify
 
-**Purpose:** understand the problem before choosing a solution.
+Goal: understand the problem, users, domain, constraints, success criteria, and terminology before choosing a solution.
 
-Current skills:
-1. `brainstorming` — clarify intent, scope, constraints, and candidate approaches before implementation when discovery/design work is needed.
+- **FILLED** `brainstorming` — intent/scope/approach discovery.
+- **FILLED** `domain-modeling` — ubiquitous language, domain concepts, context boundaries, domain ADRs.
+- **EMPTY** `requirements-engineering` — no accepted candidate yet. A previously considered `to-prd` candidate is not imported because the exact upstream GitHub source path was not verified in this pass.
+- **EMPTY** `acceptance-criteria-and-spec-writing` — no accepted candidate yet.
 
-Future capabilities expected here:
-- requirements engineering
-- acceptance criteria / specification writing
-
-**Exit condition:** the requested outcome, constraints, and success criteria are clear enough for design/planning.
-
----
+Exit: outcome, domain language, constraints, and success criteria are sufficiently clear for design.
 
 ### Phase 2 — Design the solution
 
-**Purpose:** decide what should be built and how the major parts fit together before implementation details dominate.
+Goal: decide boundaries, interfaces, data shape, threat model, and user-facing design before implementation details dominate.
 
-Current skills:
-2. `frontend-design` — when visual/frontend design is part of the problem.
+- **FILLED** `frontend-design` — visual/frontend design.
+- **FILLED** `codebase-design` — deep modules, interfaces, seams, leverage, locality, testability.
+- **PARTIAL** `software-architecture` — `codebase-design` covers module/interface architecture, but a broader system/solution-architecture candidate is still open.
+- **FILLED** `supabase-postgres-best-practices` — Postgres schema, migrations, RLS, indexes, concurrency, diagnostics, query/connection concerns.
+- **FILLED** `security-and-hardening` — threat-model-first secure design and implementation constraints.
+- **EMPTY** `api-design` — no accepted general-purpose candidate yet.
 
-Future capabilities expected here:
-- software architecture
-- API design
-- database/schema design
-- threat modeling
-
-**Exit condition:** relevant design decisions and boundaries are explicit enough to plan implementation.
-
----
+Exit: relevant boundaries/contracts/data/security decisions are explicit enough to plan implementation.
 
 ### Phase 3 — Plan the implementation
 
-**Purpose:** convert approved requirements/design into an executable change plan.
+- **FILLED** `writing-plans` — turn approved requirements/design into executable implementation steps.
+- **FILLED** `documentation-and-adrs` — record significant decisions and contracts as they crystallize; use only when documentation is warranted.
 
-Current skills:
-3. `writing-plans` — create a concrete multi-step implementation plan when the work is substantial enough to require one.
-
-**Exit condition:** files/components/interfaces/tests and implementation sequence are sufficiently defined.
-
----
+Exit: affected files/interfaces/tests and sequencing are sufficiently defined.
 
 ### Phase 4 — Prepare isolated execution
 
-**Purpose:** create a safe working context before changing code.
+- **FILLED** `using-git-worktrees` — isolated workspace when useful/supported.
 
-Current skills:
-4. `using-git-worktrees` — isolate feature/plan execution when useful and supported.
-
-**Exit condition:** the implementation workspace and baseline are known.
-
----
+Exit: workspace, baseline, and working branch are known.
 
 ### Phase 5 — Implement
 
-**Purpose:** change the system while preserving correctness and traceability.
+- **FILLED** `test-driven-development` — failing-test-first behavior changes.
+- **FILLED** `security-and-hardening` — apply security constraints while building security-relevant features.
+- **FILLED** `supabase-postgres-best-practices` — apply before Postgres changes.
+- **FILLED** `observability-and-instrumentation` — instrument production-facing behavior alongside implementation when relevant.
+- **FILLED** `subagent-driven-development` — plan execution via separable agent tasks.
+- **FILLED** `dispatching-parallel-agents` — parallel independent workstreams.
+- **FILLED** `executing-plans` — direct plan execution when that mode is appropriate.
 
-Current skills, selected by execution style:
-5. `test-driven-development` — failing-test-first implementation for features, bug fixes, refactors, and behavior changes.
-6. `subagent-driven-development` — execute a written plan through separable agent-owned tasks when subagents are appropriate.
-7. `dispatching-parallel-agents` — parallelize genuinely independent workstreams.
-8. `executing-plans` — directly execute an existing plan when subagent-driven execution is not the chosen mode.
+Orchestration skills are alternatives/complements, not a command to load all of them.
 
-These are not a requirement to load all four. `test-driven-development` governs implementation discipline; the orchestration skills determine how work is distributed/executed.
+Exit: intended behavior exists and implementation-level checks are green.
 
-**Exit condition:** intended behavior is implemented and relevant implementation-level checks are green.
+### Phase 6 — Debug failures (loopback)
 
----
+- **FILLED** `systematic-debugging` — root-cause investigation for failures/regressions/unexpected behavior.
 
-### Phase 6 — Debug failures
-
-**Purpose:** investigate unexpected behavior by root cause rather than patching symptoms.
-
-Current skills:
-9. `systematic-debugging` — use whenever bugs, regressions, failing tests, performance anomalies, or unexpected behavior appear.
-
-Debugging is a **loopback phase**: after root cause and fix, return to the phase whose work failed, then continue forward.
-
-**Exit condition:** root cause is understood, the fix is implemented, and the original failure is reproducibly resolved.
-
----
+After fixing, return to the phase that failed, then continue forward.
 
 ### Phase 7 — Verify quality
 
-**Purpose:** prove the change behaves as intended before review/release claims.
+- **FILLED** `verification-before-completion` — fresh evidence before success claims.
+- **FILLED** `performance-optimization` — evidence-led performance work when a performance requirement/regression exists.
+- **EMPTY** `test-strategy` — no accepted candidate yet for test pyramid/coverage strategy.
+- **EMPTY** `integration-contract-e2e-strategy` — no accepted dedicated candidate yet.
 
-Current skills:
-10. `verification-before-completion` — require fresh evidence before completion/fixed/passing claims.
-
-Future capabilities expected here:
-- test strategy
-- integration/contract/E2E testing strategy
-- performance engineering
-
-**Exit condition:** appropriate tests/build/typecheck/lint/runtime checks have produced fresh evidence.
-
----
+Exit: scope-appropriate tests/build/typecheck/lint/runtime/performance checks provide fresh evidence.
 
 ### Phase 8 — Review
 
-**Purpose:** independently evaluate correctness, scope, standards, and feedback before integration.
+- **FILLED** `requesting-code-review` — prepare/request review.
+- **FILLED** `code-review` — standards + spec review.
+- **FILLED** `receiving-code-review` — evaluate feedback before changing code.
+- **FILLED** `improve-codebase-architecture` — optional maintenance/refactoring review for architecture friction; not mandatory for every change.
 
-Current skills:
-11. `requesting-code-review` — prepare and request focused review.
-12. `code-review` — review a branch/PR/diff against standards and specification.
-13. `receiving-code-review` — evaluate review feedback rigorously before implementing it.
-
-Review findings can loop back to Implementation, Debugging, or Design depending on root cause. Re-run verification after material fixes.
-
-**Exit condition:** blocking review findings are resolved or explicitly adjudicated.
-
----
+Findings can loop back to Design, Implement, or Debug; re-verify after material fixes.
 
 ### Phase 9 — Security review
 
-**Purpose:** evaluate the change/system for exploitable security weaknesses before release when security review is relevant.
+- **FILLED** `security-review` — independent vulnerability/security audit.
+- `security-and-hardening` belongs earlier in Design/Implement; do not replace the independent review with self-hardening.
 
-Current skills:
-14. `security-review` — inspect vulnerability classes, secrets, dependencies, access control, and cross-file attacker-controlled data flow.
-
-Security findings loop back to Design or Implementation as appropriate, then require verification and re-review.
-
-**Exit condition:** relevant security findings are fixed, accepted with explicit rationale, or recorded as out of scope.
-
----
+Exit: relevant findings are fixed, explicitly accepted, or documented out of scope.
 
 ### Phase 10 — Integrate & deliver
 
-**Purpose:** safely integrate completed work into the repository delivery flow.
+- **FILLED** `ci-cd-and-automation` — automated quality gates and deployment pipeline.
+- **FILLED** `finishing-a-development-branch` — branch integration/PR/preservation/cleanup.
+- **FILLED** `shipping-and-launch` — production-readiness, staged rollout, launch monitoring, rollback.
+- **PARTIAL** `release-management` — shipping-and-launch covers launch/reversibility; a dedicated versioning/changelog/release-governance candidate remains open.
 
-Current skills:
-15. `finishing-a-development-branch` — verify branch state and choose merge, PR, preservation, or cleanup.
-
-Future capabilities expected here:
-- CI/CD
-- release management
-- deployment verification / rollback
-
-**Exit condition:** the requested integration/delivery action is complete or explicitly handed off.
-
----
+Exit: requested integration/release action is verified or explicitly handed off.
 
 ### Phase 11 — Operate & learn
 
-**Purpose:** keep production software observable, recoverable, and improvable after delivery.
+- **FILLED** `observability-and-instrumentation` — logs, metrics, traces, alerts, runbooks.
+- **FILLED** `documentation-and-adrs` — durable operational/architecture knowledge when appropriate.
+- **EMPTY** `incident-response` — no accepted vendor-neutral candidate yet.
+- **EMPTY** `production-diagnosis` — no accepted dedicated candidate yet.
+- **EMPTY** `postmortems` — no accepted dedicated candidate yet.
 
-No dedicated leaf skills yet. Future capabilities expected here:
-- observability engineering
-- incident response
-- production diagnosis
-- postmortems
-- technical documentation / runbooks
+Exit depends on the operational goal: restored service, understood incident, updated runbook/ADR, or measured reliability improvement.
 
-This phase is intentionally represented now so future operational skills have a correct place in the lifecycle.
+## Meta / maintenance capabilities
 
-## Meta capability
-
-The following skills maintain the skill system itself rather than a product's SDLC:
-
-- `writing-skills`
-- `using-superpowers`
-
-They live under the software-development group today because they support development-agent workflows, but they are **meta skills**, not lifecycle phases. Route them only when the task is about skills/process infrastructure itself.
+- `writing-skills` — create/modify/test Skill World skills.
+- `using-superpowers` — upstream Superpowers conventions when specifically relevant.
+- `improve-codebase-architecture` — existing-code architecture maintenance/refactoring.
 
 ## Selection algorithm
 
-For each software request:
-
 1. Identify the user's current lifecycle phase.
-2. Identify any earlier unresolved phase that is required for safe progress.
+2. Check whether an earlier unresolved phase is a real prerequisite.
 3. Read `skills/skill-loader/index/software-development.md`.
-4. Select only the leaf skills needed for the current task.
-5. Order them according to the lifecycle above.
-6. Execute the first selected skill.
+4. Select the smallest sufficient set of **FILLED** leaf skills.
+5. Never load an **EMPTY** capability as though a skill existed.
+6. Order selected skills according to this lifecycle.
 7. After each phase, reassess whether the next selected phase is still necessary.
-8. If a failure/finding changes the problem, loop back to the earliest affected phase instead of continuing mechanically.
-9. Before any completion claim, ensure verification evidence exists.
+8. Findings/failures loop back to the earliest affected phase.
+9. Before any completion claim, require fresh verification evidence.
 
 ## Fast paths
 
-The standard lifecycle does **not** mean every request must begin at Phase 1.
-
-Examples:
-
 ```text
-"Design a dashboard"
-→ Discover if requirements are unclear
-→ frontend-design
-→ planning/implementation only if requested
+Fix failing test
+→ systematic-debugging → TDD → verification
 
-"Fix this failing test"
-→ systematic-debugging
-→ test-driven-development
-→ verification-before-completion
+Review PR
+→ code-review → security-review if relevant/requested → receiving-code-review when acting on feedback
 
-"Review this PR"
-→ code-review
-→ security-review only if requested/relevant
-→ receiving-code-review only when acting on feedback
+Design new Postgres-backed feature
+→ discovery/domain-modeling as needed → codebase-design → security-and-hardening → supabase-postgres-best-practices → plan
 
-"Implement this approved plan"
-→ using-git-worktrees (when needed)
-→ TDD + execution orchestration
-→ verification
-→ review
-→ finish branch
+Production launch
+→ verification → review/security as required → ci-cd-and-automation → shipping-and-launch → observability
 ```
-
-## Quality gates
-
-Do not advance past these gates without evidence appropriate to the task:
-
-- **Discovery gate:** goal/constraints are sufficiently understood.
-- **Design gate:** major boundaries/contracts relevant to the task are decided.
-- **Implementation gate:** changed behavior has appropriate tests/checks.
-- **Verification gate:** fresh validation supports completion claims.
-- **Review gate:** blocking review/security findings are resolved or explicitly accepted.
-- **Delivery gate:** integration/release action is explicit and verified.
 
 ## Future expansion rule
 
-New software-development skills should be added to the lifecycle phase they strengthen, not appended as a flat list. When a new skill introduces a genuinely new SDLC capability, update:
-
-1. this orchestrator;
-2. `skills/skill-loader/index/software-development.md`;
-3. `skills/skill-loader/CATALOG.jsonl`;
-4. `SKILL_REGISTRY.md`;
-5. provenance/license records when third-party.
+When a new accepted skill fills an EMPTY/PARTIAL slot, update this orchestrator, the software-development index, `CATALOG.jsonl`, `SKILL_REGISTRY.md`, and provenance/license records. Do not append capabilities as a flat list.
