@@ -38,7 +38,6 @@ Skill World preserves the identity and licensing of the projects it vendors. Eac
 - License: MIT
 - Shared local license: `skills/_sources/addyosmani-web-quality-skills/LICENSE.txt`
 - Imported skill: `accessibility`.
-- Local version is adapted/condensed; detailed upstream references were not vendored in this pass.
 
 ## Supabase — agent-skills
 - Repository: https://github.com/supabase/agent-skills
@@ -50,7 +49,15 @@ Skill World preserves the identity and licensing of the projects it vendors. Eac
 - Repository: https://github.com/wshobson/agents
 - License: MIT
 - Shared local license: `skills/_sources/wshobson-agents/LICENSE.txt`
-- Imported provisional skills: `incident-runbook-templates`, `postmortem-writing`, `architecture-patterns`, and `changelog-automation`.
+- Imported skills include `incident-runbook-templates`, `postmortem-writing`, `architecture-patterns`, `changelog-automation`, `terraform-module-library`, `multi-cloud-architecture`, `k8s-manifest-generator`, `k8s-security-policies`, `microservices-patterns`, `dependency-upgrade`, `react-native-architecture`, `airflow-dag-patterns`, `dbt-transformation-patterns`, and `data-quality-frameworks`.
+- Local versions are adapted/condensed and preserve the pinned upstream commit in each `PROVENANCE.md`.
+
+## Mindrally — skills
+- Repository: https://github.com/Mindrally/skills
+- License: Apache License 2.0
+- Shared local license: `skills/_sources/mindrally-skills/LICENSE.txt`
+- Imported skill: provisional `docker`.
+- Local version is adapted/condensed and marked `weak-skill` because source/adoption strength is lower than Skill World's stronger collections.
 
 ## Rule for future imports
 

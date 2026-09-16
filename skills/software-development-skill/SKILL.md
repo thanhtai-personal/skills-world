@@ -12,7 +12,7 @@ user request
 → skill-loader
 → software-development-skill
 → software-development index
-→ selected leaf skills in lifecycle order
+→ selected lifecycle skills + relevant specialization skills
 ```
 
 Treat software development as a lifecycle, not a bag of unrelated skills. Enter at the earliest phase genuinely required for the user's task, then move forward. Do not force every phase, but do not silently skip an unresolved dependency.
@@ -20,142 +20,179 @@ Treat software development as a lifecycle, not a bag of unrelated skills. Enter 
 ## Capability status legend
 
 - **FILLED** — an accepted local skill provides a good fit for the capability.
-- **WEAK** / **`weak-skill`** — a loadable provisional candidate fills a capability that would otherwise be empty/partial, but its scope, specialization, maturity, or fit is weaker than Skill World's preferred skills for that slot. This label describes fit inside Skill World, not a judgment that the upstream project is low quality.
-- **EMPTY** — the lifecycle slot is represented but no loadable candidate exists yet.
+- **WEAK** / **`weak-skill`** — a loadable provisional candidate provides useful coverage but is weaker in source strength, adoption, specialization, maturity, or fit than Skill World's preferred skills. The label describes fit inside Skill World, not upstream quality.
+- **EMPTY** — represented capability with no loadable candidate.
 
-Prefer FILLED over WEAK when both cover the same need. Load the smallest sufficient set rather than every skill in a phase.
+Prefer FILLED over WEAK when equivalent coverage exists. Load the smallest sufficient set rather than every skill in a phase or track.
 
 ## Cross-cutting engineering rules
 
-These skills can participate in multiple lifecycle phases when their condition is present:
+These skills may participate in multiple phases when their condition applies:
 
-- **FILLED** `source-driven-development` — verify version-sensitive framework/library decisions against authoritative current documentation.
+- **FILLED** `source-driven-development` — verify version-sensitive framework/library/platform decisions against authoritative current documentation.
 - **FILLED** `security-and-hardening` — security constraints during design and implementation.
 - **FILLED** `documentation-and-adrs` — preserve important decisions/contracts.
 - **FILLED** `observability-and-instrumentation` — production telemetry alongside relevant features.
+
+## Specialized engineering tracks
+
+Specializations do **not** replace the lifecycle. First identify the lifecycle phase, then add only the track skills relevant to the technology/problem. A task can activate more than one track.
+
+### Cloud / IaC
+
+- **FILLED** `multi-cloud-architecture` — cloud-provider strategy, migration, DR, portability, data-residency, and cross-cloud trade-offs. Do not default to multi-cloud without a real requirement.
+- **FILLED** `terraform-module-library` — reusable Terraform/OpenTofu-style IaC modules, validation, examples, tests, provider/version discipline. Destructive infrastructure apply remains approval-gated.
+
+Typical ordering:
+
+```text
+cloud architecture decision
+→ multi-cloud-architecture when relevant
+→ terraform-module-library
+→ security/verification
+→ CI/CD + shipping
+```
+
+### Containers / Kubernetes
+
+- **WEAK** `docker` — Dockerfiles, Compose, image hardening, build caching, runtime configuration, and CI image workflows.
+- **FILLED** `k8s-manifest-generator` — production workload manifests, probes, resources, configuration, storage, security contexts.
+- **FILLED** `k8s-security-policies` — Pod Security Standards, NetworkPolicy, RBAC, admission policy, cluster security.
+
+Use Kubernetes skills only when the deployment target is Kubernetes. Docker alone does not imply Kubernetes.
+
+### Distributed systems / resilience
+
+- **FILLED** `microservices-patterns` — bounded service ownership, synchronous/asynchronous communication, event-driven workflows, sagas, eventual consistency, retries/timeouts/circuit breakers/bulkheads, and incremental decomposition.
+
+Do not introduce microservices merely because the application is large. A modular monolith remains preferable when independent service boundaries are not justified.
+
+### Dependency / supply chain
+
+- **FILLED** `dependency-upgrade` — compatibility analysis, official migration guidance, staged major upgrades, lockfile discipline, testing, rollback, Renovate/Dependabot policy.
+- **FILLED supporting skills** `security-and-hardening` + `security-review` — dependency/security review and supply-chain concerns.
+
+Current dedicated coverage for SBOM, artifact signing/provenance, and full software-supply-chain governance is still limited; do not imply those capabilities are fully covered by `dependency-upgrade`.
+
+### Mobile
+
+- **FILLED** `react-native-architecture` — React Native/Expo architecture, navigation, native APIs, offline-first behavior, secure storage, performance, platform differences, EAS/app-store delivery.
+
+For mobile visual direction, `frontend-design` may also be selected; for version-sensitive Expo/RN APIs, add `source-driven-development`.
+
+### Data engineering
+
+- **FILLED** `airflow-dag-patterns` — production DAG orchestration, idempotency, retries/timeouts, observability, testing.
+- **FILLED** `dbt-transformation-patterns` — staging/intermediate/mart layers, incremental models, tests, documentation, lineage.
+- **FILLED** `data-quality-frameworks` — data contracts, completeness/uniqueness/validity/consistency/freshness checks and CI/monitoring gates.
+
+A common batch analytics path is:
+
+```text
+Airflow orchestration
+→ dbt transformations
+→ data-quality gates
+→ observability
+```
 
 ## Standard software-development lifecycle
 
 ### Phase 1 — Discover & clarify
 
-Goal: understand the problem, users, domain, constraints, success criteria, and terminology before choosing a solution.
-
 - **FILLED** `brainstorming` — intent/scope/approach discovery.
 - **FILLED** `domain-modeling` — ubiquitous language, domain concepts, context boundaries.
-- **FILLED** `requirements-engineering` → `spec-driven-development` — assumptions, objective, scope, boundaries, capability decomposition, success criteria.
-- **FILLED** `acceptance-criteria-and-spec-writing` → `spec-driven-development` — testable success criteria and living specifications.
-- **WEAK supplemental** `prd` — product-oriented PRD format when explicitly useful; no longer the primary requirements skill.
+- **FILLED** `spec-driven-development` — requirements, assumptions, scope, success criteria, living specification.
+- **WEAK supplemental** `prd` — product-oriented PRD format when explicitly useful.
 
-Exit: outcome, domain language, constraints, and success criteria are sufficiently clear for design.
+Exit: outcome, domain language, constraints, and success criteria are clear enough for design.
 
 ### Phase 2 — Design the solution
 
-Goal: decide boundaries, interfaces, data shape, threat model, and user-facing design before implementation details dominate.
-
 - **FILLED** `frontend-design` — visual/UX direction.
 - **FILLED** `codebase-design` — deep modules, interfaces, seams, locality, testability.
-- **WEAK** `software-architecture` → `architecture-patterns` — Clean/Hexagonal/DDD application architecture; broader system architecture remains a replacement target.
-- **FILLED** `supabase-postgres-best-practices` — Postgres schema/migrations/RLS/indexes/concurrency/diagnostics.
+- **WEAK** `software-architecture` → `architecture-patterns`.
+- **FILLED** `supabase-postgres-best-practices` — Postgres design/migrations/RLS/indexes/concurrency.
 - **FILLED** `security-and-hardening` — threat-model-first secure design.
-- **WEAK** `api-design` → `api-and-interface-design` — contract-first API/interface design.
-- **FILLED when version-sensitive** `source-driven-development` — verify current framework/platform design guidance before committing to external APIs.
+- **WEAK** `api-design` → `api-and-interface-design`.
+- **FILLED when version-sensitive** `source-driven-development`.
+- Add specialization design skills such as `multi-cloud-architecture`, `microservices-patterns`, `react-native-architecture`, or data-engineering skills only when the task requires them.
 
-Exit: relevant boundaries/contracts/data/security decisions are explicit enough to plan implementation.
+Exit: relevant boundaries/contracts/data/security/platform decisions are explicit enough to plan implementation.
 
 ### Phase 3 — Plan the implementation
 
-- **FILLED** `writing-plans` — turn approved spec/design into executable implementation steps.
-- **FILLED** `documentation-and-adrs` — record significant decisions and contracts when warranted.
-
-Exit: affected files/interfaces/tests and sequencing are sufficiently defined.
+- **FILLED** `writing-plans`.
+- **FILLED** `documentation-and-adrs` when significant decisions/contracts should be preserved.
 
 ### Phase 4 — Prepare isolated execution
 
-- **FILLED** `using-git-worktrees` — isolated workspace when useful/supported.
-- **FILLED** `git-workflow-and-versioning` — repository branching/commit/versioning discipline where relevant.
-
-Exit: workspace, baseline, branch, and repository workflow are known.
+- **FILLED** `using-git-worktrees`.
+- **FILLED** `git-workflow-and-versioning`.
 
 ### Phase 5 — Implement
 
-- **FILLED** `test-driven-development` — failing-test-first behavior changes.
-- **FILLED** `frontend-ui-engineering` — production frontend implementation for user-facing web changes; use after/with `frontend-design` when visual direction is involved.
-- **FILLED** `source-driven-development` — framework/library implementation when correctness depends on current versions/docs.
-- **FILLED** `security-and-hardening` — security constraints for security-relevant work.
-- **FILLED** `supabase-postgres-best-practices` — before Postgres changes.
-- **FILLED** `observability-and-instrumentation` — production-facing instrumentation when relevant.
-- **FILLED** `subagent-driven-development` — execution via separable agent tasks.
-- **FILLED** `dispatching-parallel-agents` — parallel independent workstreams.
-- **FILLED** `executing-plans` — direct plan execution when appropriate.
-
-Orchestration skills are alternatives/complements, not a command to load all of them.
-
-Exit: intended behavior exists and implementation-level checks are green.
+- **FILLED** `test-driven-development`.
+- **FILLED** `frontend-ui-engineering` for production web UI.
+- **FILLED** `source-driven-development` for version-sensitive external technologies.
+- **FILLED** `security-and-hardening`.
+- **FILLED** `supabase-postgres-best-practices` for Postgres work.
+- **FILLED** `observability-and-instrumentation` when production behavior needs telemetry.
+- Execution modes: `subagent-driven-development`, `dispatching-parallel-agents`, or `executing-plans` as appropriate.
+- Add specialization implementation skills: IaC, Docker/Kubernetes, mobile, or data-engineering only when selected by the task.
 
 ### Phase 6 — Debug failures (loopback)
 
-- **FILLED** `systematic-debugging` — root-cause investigation for failures/regressions/unexpected behavior.
+- **FILLED** `systematic-debugging`.
 
-After fixing, return to the phase that failed, then continue forward.
+After root cause/fix, return to the phase that failed and continue forward.
 
 ### Phase 7 — Verify quality
 
-- **FILLED** `verification-before-completion` — fresh evidence before success claims.
-- **FILLED** `performance-optimization` — evidence-led performance work for measured requirements/regressions.
-- **FILLED** `accessibility` — WCAG 2.2 evidence-led accessibility audit/improvement for web UI.
-- **FILLED** `browser-testing-with-devtools` — real-browser DOM/console/network/a11y/visual/performance verification when compatible tooling is available.
-- **WEAK** `test-strategy` → `test-gap-audit` — behavior-centered gap audit, not a complete organization-level test strategy.
-- **WEAK** `integration-contract-e2e-strategy` → `webapp-testing` — useful browser/E2E coverage; service contract strategy remains under-covered.
-
-Exit: scope-appropriate tests/build/typecheck/lint/runtime/browser/accessibility/performance checks provide fresh evidence.
+- **FILLED** `verification-before-completion`.
+- **FILLED** `performance-optimization` for measured performance needs.
+- **FILLED** `accessibility` for web accessibility.
+- **FILLED** `browser-testing-with-devtools` when compatible tooling exists.
+- **WEAK** `test-strategy` → `test-gap-audit`.
+- **WEAK** `integration-contract-e2e-strategy` → `webapp-testing`.
+- Specialization-specific validation must also run: Terraform plan/tests, Kubernetes validation/dry-run, mobile platform/device checks, DAG/dbt/data-quality checks, etc.
 
 ### Phase 8 — Review & simplify
 
-- **FILLED** `requesting-code-review` — prepare/request review.
-- **FILLED** `code-review` — standards + spec review.
-- **FILLED** `receiving-code-review` — evaluate feedback before changing code.
-- **FILLED** `code-simplification` — optional behavior-preserving clarity pass after correctness is established.
-- **FILLED** `improve-codebase-architecture` — optional architecture-maintenance review.
-
-Findings can loop back to Design, Implement, or Debug; re-verify after material fixes.
+- `requesting-code-review` → `code-review` → `receiving-code-review` as relevant.
+- **FILLED** `code-simplification` after correctness is established.
+- **FILLED** `improve-codebase-architecture` when measured architecture friction justifies it.
 
 ### Phase 9 — Security review
 
-- **FILLED** `security-review` — independent vulnerability/security audit.
-- `security-and-hardening` belongs earlier in Design/Implement; do not replace independent review with self-hardening.
-
-Exit: relevant findings are fixed, explicitly accepted, or documented out of scope.
+- **FILLED** `security-review`.
+- Add `k8s-security-policies` for Kubernetes policy scope and relevant dependency/platform security skills for specialized systems.
 
 ### Phase 10 — Integrate & deliver
 
-- **FILLED** `git-workflow-and-versioning` — atomic history, tags/versioning/changelog contract where applicable.
-- **FILLED** `ci-cd-and-automation` — automated quality gates and deployment pipeline.
-- **FILLED** `finishing-a-development-branch` — branch integration/PR/preservation/cleanup.
-- **FILLED** `shipping-and-launch` — production-readiness, staged rollout, monitoring, rollback.
-- **WEAK** `release-management` → `changelog-automation` — dedicated release-note/changelog automation remains narrower than complete release governance; use with `git-workflow-and-versioning` and `shipping-and-launch`.
-
-Exit: requested integration/release action is verified or explicitly handed off.
+- **FILLED** `git-workflow-and-versioning`.
+- **FILLED** `ci-cd-and-automation`.
+- **FILLED** `finishing-a-development-branch`.
+- **FILLED** `shipping-and-launch`.
+- **WEAK** `release-management` → `changelog-automation`.
+- Platform delivery may additionally use Docker/Kubernetes/IaC/mobile-specific skills.
 
 ### Phase 11 — Operate & learn
 
-- **FILLED** `observability-and-instrumentation` — logs, metrics, traces, alerts, runbooks.
-- **FILLED** `documentation-and-adrs` — durable operational/architecture knowledge.
+- **FILLED** `observability-and-instrumentation`.
+- **FILLED** `documentation-and-adrs`.
 - **WEAK** `incident-response` → `incident-runbook-templates`.
 - **WEAK** `production-diagnosis` → `diagnosing-bugs`.
 - **WEAK** `postmortems` → `postmortem-writing`.
 
-Exit depends on the operational goal: restored service, understood incident, updated runbook/postmortem, or measured reliability improvement.
-
 ### Phase 12 — Maintain & evolve
 
-Goal: safely reduce complexity, replace aging systems, and remove obsolete contracts without destabilizing users/data.
+- **FILLED** `deprecation-and-migration`.
+- **FILLED** `dependency-upgrade` when external dependencies are being modernized.
+- **FILLED** `code-simplification`.
+- **FILLED** `improve-codebase-architecture`.
+- **FILLED** `source-driven-development` for external technology migration guidance.
 
-- **FILLED** `deprecation-and-migration` — API/system/feature/library/schema deprecation and migration, including coexistence and expand/contract strategies.
-- **FILLED** `code-simplification` — behavior-preserving maintainability improvements.
-- **FILLED** `improve-codebase-architecture` — deeper architecture refactoring where measured friction justifies it.
-- **FILLED** `source-driven-development` — verify migration/deprecation guidance against current upstream versions when external technologies are involved.
-
-Maintenance findings may create a new lifecycle loop starting at Discover/Design for the replacement system.
+Maintenance may start a new lifecycle loop for the replacement system.
 
 ## Meta capabilities
 
@@ -164,38 +201,39 @@ Maintenance findings may create a new lifecycle loop starting at Discover/Design
 
 ## Selection algorithm
 
-1. Identify the user's current lifecycle phase.
+1. Identify the current lifecycle phase.
 2. Check whether an earlier unresolved phase is a real prerequisite.
-3. Read `skills/skill-loader/index/software-development.md`.
-4. Select the smallest sufficient leaf set; prefer FILLED over WEAK for equivalent coverage.
-5. Add cross-cutting skills only when their actual condition applies.
-6. Order selected skills according to lifecycle/dependencies.
-7. Reassess after each phase; do not continue mechanically.
-8. Failures/findings loop back to the earliest affected phase.
-9. Before any completion claim, require fresh verification evidence.
+3. Identify relevant specialization track(s), if any.
+4. Read `skills/skill-loader/index/software-development.md`.
+5. Select the smallest sufficient lifecycle + specialization leaf set; prefer FILLED over WEAK for equivalent coverage.
+6. Add cross-cutting skills only when their actual condition applies.
+7. Order selected skills by lifecycle and technical dependency.
+8. Reassess after each phase; do not continue mechanically.
+9. Failures/findings loop back to the earliest affected phase.
+10. Before any completion claim, require fresh verification evidence.
 
 ## Fast paths
 
 ```text
-New substantial feature
-→ brainstorming/domain-modeling as needed → spec-driven-development → design → writing-plans → implement → verify → review
+Terraform infrastructure change
+→ spec/design as needed → terraform-module-library → security → plan/verify → CI/CD/delivery
 
-Frontend feature
-→ frontend-design when visual direction is needed → frontend-ui-engineering → TDD → browser-testing/accessibility → verification → review
+Kubernetes deployment
+→ docker [weak] if image work is required → k8s-manifest-generator → k8s-security-policies when policy scope applies → verify → delivery
 
-Framework-version-sensitive feature
-→ source-driven-development → relevant design/implementation skill → verification
+Distributed workflow
+→ domain-modeling → microservices-patterns only if distributed boundaries are justified → implementation → resilience/observability verification
 
-Legacy migration
-→ discover consumers → design replacement → deprecation-and-migration → incremental implementation → verify → staged release
+React Native feature
+→ frontend-design when visual direction is needed → react-native-architecture → TDD → platform verification → release
 
-Fix failing test
-→ systematic-debugging → TDD → verification
+Analytics pipeline
+→ airflow-dag-patterns → dbt-transformation-patterns when analytics SQL is involved → data-quality-frameworks → observability → verification
 
-Production incident
-→ incident-runbook-templates [weak] → diagnosing-bugs [weak] as needed → observability → postmortem-writing [weak]
+Major dependency upgrade
+→ source-driven-development → dependency-upgrade → test/verify → release
 ```
 
 ## Future expansion rule
 
-A `weak-skill` is an explicit replacement target, not a permanent best-in-class claim. When a stronger verified candidate appears, compare source quality, adoption, license, scope fit, and overlap; preserve history and update the orchestrator, software-development index, `CATALOG.jsonl`, `SKILL_REGISTRY.md`, and provenance/license records together.
+Specialization tracks should grow by capability, not by collecting every framework. A `weak-skill` remains usable and is also an explicit replacement target. Every import must update this orchestrator when routing changes, the software-development index, `CATALOG.jsonl`, `SKILL_REGISTRY.md`, and provenance/license records.
