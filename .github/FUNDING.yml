@@ -1,0 +1,11 @@
+# GitHub displays a Sponsor button for funding links declared here.
+# Until PayPal / Buy Me a Coffee are configured, this points to SUPPORT.md.
+custom:
+  - https://github.com/thanhtai-personal/skills-world/blob/main/SUPPORT.md
+
+# After creating accounts, replace or supplement the custom link above.
+# Examples:
+# buy_me_a_coffee: YOUR_USERNAME
+# custom:
+#   - https://paypal.me/YOUR_PAYPAL_NAME
+#   - https://github.com/thanhtai-personal/skills-world/blob/main/SUPPORT.md
