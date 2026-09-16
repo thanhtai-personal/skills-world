@@ -20,8 +20,7 @@ Treat software development as a lifecycle, not a bag of unrelated skills. Enter 
 ## Capability status legend
 
 - **FILLED** — an accepted local skill provides a good fit for the capability.
-- **WEAK** / **`weak-skill`** — a loadable provisional candidate fills a capability that would otherwise be empty, but its scope, specialization, maturity, or fit is weaker than Skill World's preferred skills for that slot. This label describes **fit inside Skill World**, not a judgment that the upstream project is low quality. Replace it when a materially stronger candidate is verified.
-- **PARTIAL** — one or more local skills cover meaningful parts of the capability, but the broader capability still lacks a dedicated accepted skill.
+- **WEAK** / **`weak-skill`** — a loadable provisional candidate fills a capability that would otherwise be empty/partial, but its scope, specialization, maturity, or fit is weaker than Skill World's preferred skills for that slot. This label describes **fit inside Skill World**, not a judgment that the upstream project is low quality. Replace it when a materially stronger candidate is verified.
 - **EMPTY** — the lifecycle slot is represented but no loadable candidate exists yet.
 
 When two candidates cover the same need, prefer **FILLED** over **WEAK**. A WEAK skill is still usable when it is the best exact capability match.
@@ -34,8 +33,8 @@ Goal: understand the problem, users, domain, constraints, success criteria, and 
 
 - **FILLED** `brainstorming` — intent/scope/approach discovery.
 - **FILLED** `domain-modeling` — ubiquitous language, domain concepts, context boundaries, domain ADRs.
-- **WEAK** `requirements-engineering` → `prd` — provisional requirements capture through a structured product requirements document.
-- **WEAK** `acceptance-criteria-and-spec-writing` → `prd` — the same skill also supplies measurable acceptance criteria and non-goals; load it once when both capabilities are needed.
+- **WEAK** `requirements-engineering` → `prd` — provisional requirements capture through a structured PRD.
+- **WEAK** `acceptance-criteria-and-spec-writing` → `prd` — measurable acceptance criteria and non-goals; load once when both capabilities are needed.
 
 Exit: outcome, domain language, constraints, and success criteria are sufficiently clear for design.
 
@@ -45,7 +44,7 @@ Goal: decide boundaries, interfaces, data shape, threat model, and user-facing d
 
 - **FILLED** `frontend-design` — visual/frontend design.
 - **FILLED** `codebase-design` — deep modules, interfaces, seams, leverage, locality, testability.
-- **PARTIAL** `software-architecture` — `codebase-design` covers module/interface architecture, but broader system/solution architecture remains a replacement/search target.
+- **WEAK** `software-architecture` → `architecture-patterns` — Clean/Hexagonal/DDD architecture patterns; useful for backend/application structure, but still weaker than a full solution-architecture capability.
 - **FILLED** `supabase-postgres-best-practices` — Postgres schema, migrations, RLS, indexes, concurrency, diagnostics, query/connection concerns.
 - **FILLED** `security-and-hardening` — threat-model-first secure design and implementation constraints.
 - **WEAK** `api-design` → `api-and-interface-design` — contract-first API/interface design, compatibility, errors, pagination, validation, and idempotency.
@@ -55,7 +54,7 @@ Exit: relevant boundaries/contracts/data/security decisions are explicit enough 
 ### Phase 3 — Plan the implementation
 
 - **FILLED** `writing-plans` — turn approved requirements/design into executable implementation steps.
-- **FILLED** `documentation-and-adrs` — record significant decisions and contracts when documentation is warranted.
+- **FILLED** `documentation-and-adrs` — record significant decisions and contracts when warranted.
 
 Exit: affected files/interfaces/tests and sequencing are sufficiently defined.
 
@@ -115,7 +114,7 @@ Exit: relevant findings are fixed, explicitly accepted, or documented out of sco
 - **FILLED** `ci-cd-and-automation` — automated quality gates and deployment pipeline.
 - **FILLED** `finishing-a-development-branch` — branch integration/PR/preservation/cleanup.
 - **FILLED** `shipping-and-launch` — production-readiness, staged rollout, launch monitoring, rollback.
-- **PARTIAL** `release-management` — shipping-and-launch covers rollout/reversibility, while dedicated versioning/changelog/release-governance remains a search target.
+- **WEAK** `release-management` → `changelog-automation` — semantic versioning, Conventional Commits, changelog/release-note automation, breaking-change documentation; pair with `shipping-and-launch` for rollout/rollback.
 
 Exit: requested integration/release action is verified or explicitly handed off.
 
@@ -123,9 +122,9 @@ Exit: requested integration/release action is verified or explicitly handed off.
 
 - **FILLED** `observability-and-instrumentation` — logs, metrics, traces, alerts, runbooks.
 - **FILLED** `documentation-and-adrs` — durable operational/architecture knowledge.
-- **WEAK** `incident-response` → `incident-runbook-templates` — severity/triage/mitigation/recovery/communication/runbook workflow; provisional because it is runbook-centric rather than a full incident-command platform.
-- **WEAK** `production-diagnosis` → `diagnosing-bugs` — tight-reproduction-loop diagnosis for hard/production-like failures; provisional because it overlaps general debugging and is not operations-specific.
-- **WEAK** `postmortems` → `postmortem-writing` — blameless timeline/RCA/action-item workflow; provisional because it is not yet deeply integrated with reliability metrics and action tracking.
+- **WEAK** `incident-response` → `incident-runbook-templates` — severity/triage/mitigation/recovery/communication/runbook workflow.
+- **WEAK** `production-diagnosis` → `diagnosing-bugs` — tight-reproduction-loop diagnosis for hard/production-like failures.
+- **WEAK** `postmortems` → `postmortem-writing` — blameless timeline/RCA/action-item workflow.
 
 Exit depends on the operational goal: restored service, understood incident, updated runbook/postmortem, or measured reliability improvement.
 
@@ -142,11 +141,10 @@ Exit depends on the operational goal: restored service, understood incident, upd
 3. Read `skills/skill-loader/index/software-development.md`.
 4. Select the smallest sufficient leaf set. Prefer **FILLED** over **WEAK** when both genuinely cover the same capability.
 5. Use a **WEAK** skill when it is the best indexed exact capability match; retain awareness of the limitation stated in the index.
-6. Never pretend a **PARTIAL** capability is fully covered beyond what its underlying skills actually provide.
-7. Order selected skills according to this lifecycle.
-8. After each phase, reassess whether the next selected phase is still necessary.
-9. Findings/failures loop back to the earliest affected phase.
-10. Before any completion claim, require fresh verification evidence.
+6. Order selected skills according to this lifecycle.
+7. After each phase, reassess whether the next selected phase is still necessary.
+8. Findings/failures loop back to the earliest affected phase.
+9. Before any completion claim, require fresh verification evidence.
 
 ## Fast paths
 
@@ -157,14 +155,14 @@ Fix failing test
 Review PR
 → code-review → security-review if relevant/requested → receiving-code-review when acting on feedback
 
-Define a new feature from a vague request
-→ brainstorming/domain-modeling → prd [weak] → design → plan
+Design backend/service architecture
+→ domain-modeling as needed → architecture-patterns [weak] → codebase-design → ADRs → plan
+
+Prepare a versioned release
+→ verification/review → changelog-automation [weak] → ci-cd-and-automation → shipping-and-launch → observability
 
 Production incident
 → incident-runbook-templates [weak] → diagnosing-bugs [weak] as needed → observability → postmortem-writing [weak]
-
-Production launch
-→ verification → review/security as required → ci-cd-and-automation → shipping-and-launch → observability
 ```
 
 ## Future expansion rule

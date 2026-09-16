@@ -46,8 +46,8 @@ Skill World preserves the identity and licensing of the projects it vendors. Eac
 - Repository: https://github.com/wshobson/agents
 - License: MIT
 - Shared local license: `skills/_sources/wshobson-agents/LICENSE.txt`
-- Imported provisional skills: `incident-runbook-templates` and `postmortem-writing`.
-- Both are adapted/condensed and marked `weak-skill` for their Skill World lifecycle slots.
+- Imported provisional skills: `incident-runbook-templates`, `postmortem-writing`, `architecture-patterns`, and `changelog-automation`.
+- These local versions are adapted/condensed and marked `weak-skill` for their Skill World lifecycle slots.
 
 ## Rule for future imports
 

@@ -39,6 +39,8 @@ Historical adoption ledger for Skill World. Popularity values are snapshots obse
 | diagnosing-bugs | software-development / operate / weak-skill | 2026-09-17 (UTC+7) | 262.8K | 608.1K | https://github.com/mattpocock/skills/tree/959a8e9f1edc3adbe2f7e3054bb6fbefa6696260/skills/engineering/diagnosing-bugs | Matt Pocock / `mattpocock/skills` |
 | incident-runbook-templates | software-development / operate / weak-skill | 2026-09-17 (UTC+7) | 39.3K | 9.4K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/incident-response/skills/incident-runbook-templates | Seth Hobson / `wshobson/agents` |
 | postmortem-writing | software-development / operate / weak-skill | 2026-09-17 (UTC+7) | 39.3K | 9.3K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/incident-response/skills/postmortem-writing | Seth Hobson / `wshobson/agents` |
+| architecture-patterns | software-development / design / weak-skill | 2026-09-17 (UTC+7) | 39,724 | 22.1K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/backend-development/skills/architecture-patterns | Seth Hobson / `wshobson/agents` |
+| changelog-automation | software-development / deliver / weak-skill | 2026-09-17 (UTC+7) | 39,724 | 12.1K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/documentation-generation/skills/changelog-automation | Seth Hobson / `wshobson/agents` |
 
 ## Sources for popularity snapshots
 

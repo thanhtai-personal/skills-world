@@ -9,15 +9,15 @@ Canonical leaf index for `software-development-skill`. Lifecycle ordering and st
 - `brainstorming` → `skills/brainstorming/SKILL.md` — Jesse Vincent / obra / `obra/superpowers`
 - `domain-modeling` → `skills/domain-modeling/SKILL.md` — Matt Pocock / `mattpocock/skills`
 - **WEAK `weak-skill`:** `requirements-engineering` → `skills/prd/SKILL.md` — GitHub / `github/awesome-copilot`; PRD-oriented rather than full requirements engineering.
-- **WEAK `weak-skill`:** `acceptance-criteria-and-spec-writing` → `skills/prd/SKILL.md` — same local skill; measurable acceptance criteria are included, but rigorous spec engineering remains a replacement target.
+- **WEAK `weak-skill`:** `acceptance-criteria-and-spec-writing` → `skills/prd/SKILL.md` — same local skill; rigorous spec engineering remains a replacement target.
 
 ## Design
 
 - `frontend-design` → `skills/frontend-design/SKILL.md` — Anthropic / `anthropics/skills`
 - `codebase-design` → `skills/codebase-design/SKILL.md` — Matt Pocock / `mattpocock/skills`
+- **WEAK `weak-skill`:** `software-architecture` → `skills/architecture-patterns/SKILL.md` — Seth Hobson / `wshobson/agents`; strong Clean/Hexagonal/DDD backend architecture patterns, incomplete for broad solution/system architecture.
 - `supabase-postgres-best-practices` → `skills/supabase-postgres-best-practices/SKILL.md` — Supabase / `supabase/agent-skills`
 - `security-and-hardening` → `skills/security-and-hardening/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
-- **PARTIAL:** broader `software-architecture` — current coverage is module/interface-centric.
 - **WEAK `weak-skill`:** `api-design` → `skills/api-and-interface-design/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`; broad interface guidance rather than deep API governance.
 
 ## Plan
@@ -65,8 +65,8 @@ Canonical leaf index for `software-development-skill`. Lifecycle ordering and st
 
 - `ci-cd-and-automation` → `skills/ci-cd-and-automation/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
 - `finishing-a-development-branch` → `skills/finishing-a-development-branch/SKILL.md` — Jesse Vincent / obra
+- **WEAK `weak-skill`:** `release-management` → `skills/changelog-automation/SKILL.md` — Seth Hobson / `wshobson/agents`; versioning/changelog/release-note automation, incomplete for full release governance.
 - `shipping-and-launch` → `skills/shipping-and-launch/SKILL.md` — Addy Osmani / `addyosmani/agent-skills`
-- **PARTIAL:** `release-management` — rollout/reversibility covered; release governance/versioning remains open.
 
 ## Operate & learn
 
