@@ -49,7 +49,7 @@ Skill World preserves the identity and licensing of the projects it vendors. Eac
 - Repository: https://github.com/wshobson/agents
 - License: MIT
 - Shared local license: `skills/_sources/wshobson-agents/LICENSE.txt`
-- Imported skills include `incident-runbook-templates`, `postmortem-writing`, `architecture-patterns`, `changelog-automation`, `terraform-module-library`, `multi-cloud-architecture`, `k8s-manifest-generator`, `k8s-security-policies`, `microservices-patterns`, `dependency-upgrade`, `react-native-architecture`, `airflow-dag-patterns`, `dbt-transformation-patterns`, and `data-quality-frameworks`.
+- Imported skills include `incident-runbook-templates`, `postmortem-writing`, `architecture-patterns`, `changelog-automation`, `terraform-module-library`, `multi-cloud-architecture`, `k8s-manifest-generator`, `k8s-security-policies`, `helm-chart-scaffolding`, `gitops-workflow`, `microservices-patterns`, `saga-orchestration`, `workflow-orchestration-patterns`, `event-store-design`, `dependency-upgrade`, `react-native-architecture`, `airflow-dag-patterns`, `dbt-transformation-patterns`, `data-quality-frameworks`, and `spark-optimization`.
 - Local versions are adapted/condensed and preserve the pinned upstream commit in each `PROVENANCE.md`.
 
 ## Mindrally — skills
