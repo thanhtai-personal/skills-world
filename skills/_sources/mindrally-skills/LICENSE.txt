@@ -1,0 +1,10 @@
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   Copyright and redistribution remain governed by the upstream Apache License 2.0.
+   This local file is a notice pointer for the imported Mindrally skill. For the complete
+   Apache License 2.0 text, see the upstream repository snapshot recorded in provenance
+   or https://www.apache.org/licenses/LICENSE-2.0 .
