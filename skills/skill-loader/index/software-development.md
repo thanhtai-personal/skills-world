@@ -91,10 +91,15 @@ These are conditional overlays on the lifecycle, not separate bypass routes.
 ## Containers / Kubernetes
 - **WEAK:** `docker` → `skills/docker/SKILL.md` — Mindrally / `Mindrally/skills`
 - `k8s-manifest-generator` → `skills/k8s-manifest-generator/SKILL.md` — Seth Hobson / `wshobson/agents`
+- `helm-chart-scaffolding` → `skills/helm-chart-scaffolding/SKILL.md` — Seth Hobson / `wshobson/agents`
 - `k8s-security-policies` → `skills/k8s-security-policies/SKILL.md` — Seth Hobson / `wshobson/agents`
+- `gitops-workflow` → `skills/gitops-workflow/SKILL.md` — Seth Hobson / `wshobson/agents`
 
 ## Distributed systems / resilience
 - `microservices-patterns` → `skills/microservices-patterns/SKILL.md` — Seth Hobson / `wshobson/agents`
+- `saga-orchestration` → `skills/saga-orchestration/SKILL.md` — Seth Hobson / `wshobson/agents`
+- `workflow-orchestration-patterns` → `skills/workflow-orchestration-patterns/SKILL.md` — Seth Hobson / `wshobson/agents`
+- `event-store-design` → `skills/event-store-design/SKILL.md` — Seth Hobson / `wshobson/agents`
 
 ## Dependency / supply chain
 - `dependency-upgrade` → `skills/dependency-upgrade/SKILL.md` — Seth Hobson / `wshobson/agents`
@@ -108,6 +113,7 @@ These are conditional overlays on the lifecycle, not separate bypass routes.
 - `airflow-dag-patterns` → `skills/airflow-dag-patterns/SKILL.md` — Seth Hobson / `wshobson/agents`
 - `dbt-transformation-patterns` → `skills/dbt-transformation-patterns/SKILL.md` — Seth Hobson / `wshobson/agents`
 - `data-quality-frameworks` → `skills/data-quality-frameworks/SKILL.md` — Seth Hobson / `wshobson/agents`
+- `spark-optimization` → `skills/spark-optimization/SKILL.md` — Seth Hobson / `wshobson/agents`
 
 ## Meta
 - `writing-skills` → `skills/writing-skills/SKILL.md` — Jesse Vincent / obra

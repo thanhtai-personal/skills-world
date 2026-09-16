@@ -57,15 +57,44 @@ cloud architecture decision
 
 - **WEAK** `docker` — Dockerfiles, Compose, image hardening, build caching, runtime configuration, and CI image workflows.
 - **FILLED** `k8s-manifest-generator` — production workload manifests, probes, resources, configuration, storage, security contexts.
+- **FILLED** `helm-chart-scaffolding` — reusable Helm packaging, values, helpers, dependencies, chart validation.
 - **FILLED** `k8s-security-policies` — Pod Security Standards, NetworkPolicy, RBAC, admission policy, cluster security.
+- **FILLED** `gitops-workflow` — Argo CD / Flux style declarative delivery and continuous reconciliation.
 
-Use Kubernetes skills only when the deployment target is Kubernetes. Docker alone does not imply Kubernetes.
+Use Kubernetes skills only when the deployment target is Kubernetes. Docker alone does not imply Kubernetes. A common path is:
+
+```text
+container image
+→ base Kubernetes manifests
+→ Helm only when reusable templating/package distribution is needed
+→ security policies
+→ GitOps only when reconciliation-based delivery is actually used
+```
 
 ### Distributed systems / resilience
 
-- **FILLED** `microservices-patterns` — bounded service ownership, synchronous/asynchronous communication, event-driven workflows, sagas, eventual consistency, retries/timeouts/circuit breakers/bulkheads, and incremental decomposition.
+- **FILLED** `microservices-patterns` — service boundaries, communication, eventual consistency, retries/timeouts/circuit breakers/bulkheads, and incremental decomposition.
+- **FILLED** `saga-orchestration` — compensating distributed transactions with idempotent steps, timeouts, recovery, correlation, and stuck-saga handling.
+- **FILLED** `workflow-orchestration-patterns` — durable long-running workflows with workflow/activity separation and deterministic orchestration.
+- **FILLED** `event-store-design` — event-sourced append-only persistence, replay, concurrency/versioning, projections, and schema evolution.
 
-Do not introduce microservices merely because the application is large. A modular monolith remains preferable when independent service boundaries are not justified.
+Do not introduce microservices, sagas, workflow engines, or event sourcing merely because they are available. Prefer a simpler local transaction/modular monolith when it satisfies the requirement.
+
+Selection distinctions:
+
+```text
+single local ACID transaction
+→ do not use saga/workflow engine
+
+cross-service transaction with compensation
+→ saga-orchestration
+
+long-running recoverable process / timers / human waits
+→ workflow-orchestration-patterns
+
+immutable event history is a domain requirement
+→ event-store-design
+```
 
 ### Dependency / supply chain
 
@@ -85,14 +114,21 @@ For mobile visual direction, `frontend-design` may also be selected; for version
 - **FILLED** `airflow-dag-patterns` — production DAG orchestration, idempotency, retries/timeouts, observability, testing.
 - **FILLED** `dbt-transformation-patterns` — staging/intermediate/mart layers, incremental models, tests, documentation, lineage.
 - **FILLED** `data-quality-frameworks` — data contracts, completeness/uniqueness/validity/consistency/freshness checks and CI/monitoring gates.
+- **FILLED** `spark-optimization` — evidence-led Spark tuning for partitioning, shuffle/skew, memory, caching, formats, and adaptive execution.
 
-A common batch analytics path is:
+Common paths:
 
 ```text
-Airflow orchestration
-→ dbt transformations
-→ data-quality gates
+batch analytics
+→ airflow-dag-patterns
+→ dbt-transformation-patterns when SQL modeling is involved
+→ data-quality-frameworks
 → observability
+
+large-scale Spark workload
+→ pipeline/data-quality design
+→ spark-optimization only after real execution evidence exists
+→ verification
 ```
 
 ## Standard software-development lifecycle
@@ -115,7 +151,7 @@ Exit: outcome, domain language, constraints, and success criteria are clear enou
 - **FILLED** `security-and-hardening` — threat-model-first secure design.
 - **WEAK** `api-design` → `api-and-interface-design`.
 - **FILLED when version-sensitive** `source-driven-development`.
-- Add specialization design skills such as `multi-cloud-architecture`, `microservices-patterns`, `react-native-architecture`, or data-engineering skills only when the task requires them.
+- Add specialization design skills such as `multi-cloud-architecture`, `microservices-patterns`, `saga-orchestration`, `workflow-orchestration-patterns`, `event-store-design`, `react-native-architecture`, or data-engineering skills only when the task requires them.
 
 Exit: relevant boundaries/contracts/data/security/platform decisions are explicit enough to plan implementation.
 
@@ -138,7 +174,7 @@ Exit: relevant boundaries/contracts/data/security/platform decisions are explici
 - **FILLED** `supabase-postgres-best-practices` for Postgres work.
 - **FILLED** `observability-and-instrumentation` when production behavior needs telemetry.
 - Execution modes: `subagent-driven-development`, `dispatching-parallel-agents`, or `executing-plans` as appropriate.
-- Add specialization implementation skills: IaC, Docker/Kubernetes, mobile, or data-engineering only when selected by the task.
+- Add specialization implementation skills: IaC, Docker/Kubernetes/Helm/GitOps, distributed workflows/event stores, mobile, or data-engineering only when selected by the task.
 
 ### Phase 6 — Debug failures (loopback)
 
@@ -154,7 +190,7 @@ After root cause/fix, return to the phase that failed and continue forward.
 - **FILLED** `browser-testing-with-devtools` when compatible tooling exists.
 - **WEAK** `test-strategy` → `test-gap-audit`.
 - **WEAK** `integration-contract-e2e-strategy` → `webapp-testing`.
-- Specialization-specific validation must also run: Terraform plan/tests, Kubernetes validation/dry-run, mobile platform/device checks, DAG/dbt/data-quality checks, etc.
+- Specialization-specific validation must also run: Terraform plan/tests, Helm lint/render, Kubernetes validation/dry-run, GitOps diff/reconciliation checks, saga/workflow failure-path tests, event replay/projection rebuild tests, mobile platform/device checks, DAG/dbt/data-quality/Spark checks, etc.
 
 ### Phase 8 — Review & simplify
 
@@ -174,7 +210,7 @@ After root cause/fix, return to the phase that failed and continue forward.
 - **FILLED** `finishing-a-development-branch`.
 - **FILLED** `shipping-and-launch`.
 - **WEAK** `release-management` → `changelog-automation`.
-- Platform delivery may additionally use Docker/Kubernetes/IaC/mobile-specific skills.
+- Platform delivery may additionally use Docker/Kubernetes/Helm/GitOps/IaC/mobile-specific skills.
 
 ### Phase 11 — Operate & learn
 
@@ -183,6 +219,7 @@ After root cause/fix, return to the phase that failed and continue forward.
 - **WEAK** `incident-response` → `incident-runbook-templates`.
 - **WEAK** `production-diagnosis` → `diagnosing-bugs`.
 - **WEAK** `postmortems` → `postmortem-writing`.
+- Distributed workflow/event-store systems also require stuck-workflow/saga detection, replay/rebuild procedures, and consumer/backpressure monitoring where applicable.
 
 ### Phase 12 — Maintain & evolve
 
@@ -218,17 +255,26 @@ Maintenance may start a new lifecycle loop for the replacement system.
 Terraform infrastructure change
 → spec/design as needed → terraform-module-library → security → plan/verify → CI/CD/delivery
 
-Kubernetes deployment
-→ docker [weak] if image work is required → k8s-manifest-generator → k8s-security-policies when policy scope applies → verify → delivery
+Kubernetes app packaging + GitOps
+→ docker [weak] if image work is required → k8s-manifest-generator → helm-chart-scaffolding → k8s-security-policies when relevant → gitops-workflow → verify → delivery
 
-Distributed workflow
-→ domain-modeling → microservices-patterns only if distributed boundaries are justified → implementation → resilience/observability verification
+Cross-service business transaction
+→ domain-modeling → microservices-patterns only if distributed boundaries are justified → saga-orchestration → observability/failure-path verification
+
+Long-running durable business process
+→ workflow-orchestration-patterns → activity/idempotency tests → observability → verification
+
+Event-sourced aggregate
+→ domain-modeling → event-store-design → projection/replay tests → observability
 
 React Native feature
 → frontend-design when visual direction is needed → react-native-architecture → TDD → platform verification → release
 
 Analytics pipeline
 → airflow-dag-patterns → dbt-transformation-patterns when analytics SQL is involved → data-quality-frameworks → observability → verification
+
+Slow Spark workload
+→ collect execution evidence → spark-optimization → data-quality verification → benchmark comparison
 
 Major dependency upgrade
 → source-driven-development → dependency-upgrade → test/verify → release
