@@ -2,19 +2,40 @@
 
 This file is routing metadata. It is not a replacement for downstream `SKILL.md` files.
 
+## Provenance invariant
+
+Every imported skill must preserve its original collection and author in this repository. Keep a `PROVENANCE.md` beside locally copied third-party skills. Index entries must name the original author/source collection; reorganizing a skill locally must never erase its origin.
+
 ## Local skills
 
 ### frontend-design
 - category: frontend / design
+- author: Anthropic, PBC
+- original_collection: `anthropics/skills`
 - source: Anthropic `anthropics/skills`
 - path: `skills/frontend-design/SKILL.md`
+- provenance: `skills/frontend-design/PROVENANCE.md`
 - use_when: Creating a new UI, redesigning/restyling an existing UI, defining visual direction, typography, palette, layout, responsive presentation, or critiquing frontend visual quality.
 - triggers: frontend design, UI design, redesign, restyle, landing page, dashboard, visual hierarchy, typography, responsive UI, web design
 - do_not_use_when: Backend-only work, database-only work, non-visual refactors, or bug fixes with no UI/design dimension.
 
+### code-review
+- category: engineering / code review
+- author: Matt Pocock
+- original_collection: `mattpocock/skills`
+- source: Matt Pocock `mattpocock/skills`
+- path: `skills/code-review/SKILL.md`
+- provenance: `skills/code-review/PROVENANCE.md`
+- use_when: Reviewing a branch, PR, work-in-progress changes, or a diff since a fixed commit/branch/tag against repository standards and the originating spec.
+- triggers: code review, review PR, review branch, review diff, review since, standards review, spec compliance
+- do_not_use_when: The user only wants feedback interpreted after a review; route to `receiving-code-review` for that workflow.
+
 ## External collection: obra/superpowers
 
-Source mirror: `https://github.com/thanhtai-personal/superpowers/tree/main/skills`
+- original_author: Jesse Vincent / obra
+- original_collection: `obra/superpowers`
+- source: `https://github.com/obra/superpowers`
+- personal_mirror: `https://github.com/thanhtai-personal/superpowers/tree/main/skills`
 
 ### brainstorming
 - category: process
