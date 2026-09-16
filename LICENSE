@@ -1,0 +1,47 @@
+MIT License
+
+Copyright (c) 2026 Skill World contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the repository-original portions of this software and associated
+documentation files (the "Skill World Original Material"), to deal in the
+Skill World Original Material without restriction, including without
+limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Skill World Original Material, and to
+permit persons to whom the Skill World Original Material is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Skill World Original Material.
+
+THE SKILL WORLD ORIGINAL MATERIAL IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SKILL WORLD ORIGINAL MATERIAL
+OR THE USE OR OTHER DEALINGS IN THE SKILL WORLD ORIGINAL MATERIAL.
+
+---
+
+THIRD-PARTY MATERIAL
+
+This repository also contains skills, documentation, reference material, and
+derivative/adapted material copied from third-party repositories. Those works
+are NOT relicensed by this root MIT License merely because they are included
+in Skill World. They remain subject to their applicable upstream licenses,
+copyright notices, attribution requirements, NOTICE requirements (if any),
+and other license conditions.
+
+For third-party material, consult in this order:
+
+1. the skill's sibling PROVENANCE.md;
+2. the license file stored with the skill or its source collection;
+3. THIRD_PARTY_NOTICES.md; and
+4. the recorded upstream repository/snapshot when clarification is needed.
+
+Where a local file adapts third-party material, the upstream-derived portion
+continues to be governed by the upstream license. Any separable original Skill
+World contribution is offered under the MIT terms above unless that file says
+otherwise. Nothing in this file grants rights beyond those granted by the
+applicable upstream license for third-party material.
