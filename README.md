@@ -106,7 +106,7 @@ When Skill World grows to hundreds or thousands of skills, `CATALOG.jsonl` can f
 
 ## Support Skill World ☕
 
-If Skill World saves you time or helps you build something useful, the best support is to **star the repository, share it, and contribute**. If you would also like to support ongoing curation and expansion financially, you can use [PayPal](https://www.paypal.me/kaistudio6886) or see [`SUPPORT.md`](SUPPORT.md).
+If Skill World saves you time or helps you build something useful, the best support is to **star the repository, share it, and contribute**. If you would also like to support ongoing curation and expansion financially, you can use [PayPal](https://www.paypal.me/kaistudio6886) or see [`SUPPORT.md`](SUPPORT.md) for Vietnam QR support.
 
 ## Thanks to the giants
 

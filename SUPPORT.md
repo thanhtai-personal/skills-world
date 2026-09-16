@@ -2,7 +2,15 @@
 
 Thank you for considering supporting Skill World. The most valuable support is still simple: **star the repository, share it, report issues, and contribute useful skills or improvements**.
 
-If you would also like to support the time spent curating, reviewing, documenting, and expanding Skill World into new domains, you can support the project through PayPal.
+If you would also like to support the time spent curating, reviewing, documenting, and expanding Skill World into new domains, you can use one of the options below.
+
+## Vietnam QR support
+
+Scan the QR code below with a supported Vietnamese banking app:
+
+![Vietnam support QR](./QR.jpg)
+
+If the image does not render in your GitHub view, open [`QR.jpg`](./QR.jpg) directly.
 
 ## PayPal
 
