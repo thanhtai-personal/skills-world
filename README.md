@@ -1,11 +1,9 @@
 # My Collection Skills
 
-Kho lưu trữ cá nhân cho các bộ AI skills có thể tái sử dụng.
+Kho lưu trữ/index cá nhân cho các bộ AI skills có thể tái sử dụng.
 
 ## Collections
 
-### obra/superpowers
+- [obra/superpowers](collections/obra-superpowers.md) — full mirror hiện được lưu trong fork GitHub của tài khoản này.
 
-Nguồn: https://github.com/obra/superpowers
-
-Bộ skill được lưu dưới `skills/`. License và thông tin nguồn upstream được giữ kèm trong repo.
+Repo collection này giữ nguồn, snapshot và ghi chú để sau này có thể thêm nhiều bộ skill khác mà không trộn provenance/license.
