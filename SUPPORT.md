@@ -2,17 +2,11 @@
 
 Thank you for considering supporting Skill World. The most valuable support is still simple: **star the repository, share it, report issues, and contribute useful skills or improvements**.
 
-If you would also like to support the time spent curating, reviewing, documenting, and expanding Skill World into new domains, external support links can be added here once configured.
+If you would also like to support the time spent curating, reviewing, documenting, and expanding Skill World into new domains, you can support the project through PayPal.
 
 ## PayPal
 
-**Not configured yet.**
-
-Once a PayPal.Me link is created, add it here in the form:
-
-```text
-https://paypal.me/<your-paypal-name>
-```
+[**paypal.me/kaistudio6886**](https://www.paypal.me/kaistudio6886)
 
 ## Buy Me a Coffee
 

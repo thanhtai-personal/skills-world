@@ -104,6 +104,10 @@ Today the collection is small enough that deterministic tree routing is simpler 
 
 When Skill World grows to hundreds or thousands of skills, `CATALOG.jsonl` can feed lexical + embedding/hybrid retrieval. RAG should remain candidate discovery: final candidates must still resolve through `skill-loader` and the relevant group orchestrator before a leaf skill is loaded.
 
+## Support Skill World ☕
+
+If Skill World saves you time or helps you build something useful, the best support is to **star the repository, share it, and contribute**. If you would also like to support ongoing curation and expansion financially, you can use [PayPal](https://www.paypal.me/kaistudio6886) or see [`SUPPORT.md`](SUPPORT.md).
+
 ## Thanks to the giants
 
 Current imported collections include work from:
