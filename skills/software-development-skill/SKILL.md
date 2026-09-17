@@ -61,15 +61,7 @@ cloud architecture decision
 - **FILLED** `k8s-security-policies` — Pod Security Standards, NetworkPolicy, RBAC, admission policy, cluster security.
 - **FILLED** `gitops-workflow` — Argo CD / Flux style declarative delivery and continuous reconciliation.
 
-Use Kubernetes skills only when the deployment target is Kubernetes. Docker alone does not imply Kubernetes. A common path is:
-
-```text
-container image
-→ base Kubernetes manifests
-→ Helm only when reusable templating/package distribution is needed
-→ security policies
-→ GitOps only when reconciliation-based delivery is actually used
-```
+Use Kubernetes skills only when the deployment target is Kubernetes. Docker alone does not imply Kubernetes.
 
 ### Distributed systems / resilience
 
@@ -78,7 +70,7 @@ container image
 - **FILLED** `workflow-orchestration-patterns` — durable long-running workflows with workflow/activity separation and deterministic orchestration.
 - **FILLED** `event-store-design` — event-sourced append-only persistence, replay, concurrency/versioning, projections, and schema evolution.
 
-Do not introduce microservices, sagas, workflow engines, or event sourcing merely because they are available. Prefer a simpler local transaction/modular monolith when it satisfies the requirement.
+Prefer a local transaction/modular monolith when it satisfies the requirement.
 
 Selection distinctions:
 
@@ -96,16 +88,35 @@ immutable event history is a domain requirement
 → event-store-design
 ```
 
-### Dependency / supply chain
+### Supply chain security
 
 - **FILLED** `dependency-upgrade` — compatibility analysis, official migration guidance, staged major upgrades, lockfile discipline, testing, rollback, Renovate/Dependabot policy.
-- **FILLED supporting skills** `security-and-hardening` + `security-review` — dependency/security review and supply-chain concerns.
+- **FILLED** `software-supply-chain-security` — SBOM generation, SCA, artifact signing/verification, provenance/attestations, and SLSA-oriented build controls.
+- Supporting skills: `security-and-hardening`, `security-review`, `ci-cd-and-automation`.
 
-Current dedicated coverage for SBOM, artifact signing/provenance, and full software-supply-chain governance is still limited; do not imply those capabilities are fully covered by `dependency-upgrade`.
+Typical release-security path:
+
+```text
+resolve dependencies
+→ SCA
+→ build
+→ SBOM
+→ provenance / attestation
+→ artifact signing
+→ verification
+→ publish/deploy
+```
+
+### Messaging / streaming
+
+- **FILLED** `kafka-event-streaming` — Kafka topic/key/partition/retention design, schema registry compatibility, consumer reliability, retries/DLQ/idempotency, and event contracts/AsyncAPI.
+
+Use this for broker/event-contract concerns. Add `saga-orchestration`, `event-store-design`, `microservices-patterns`, or `data-platform-architecture` only for their distinct concerns.
 
 ### Mobile
 
-- **FILLED** `react-native-architecture` — React Native/Expo architecture, navigation, native APIs, offline-first behavior, secure storage, performance, platform differences, EAS/app-store delivery.
+- **FILLED** `react-native-architecture` — React Native/Expo architecture, navigation, native APIs, offline-first behavior, secure storage, performance, platform differences.
+- **FILLED** `mobile-testing-and-release` — layered mobile testing, release-like platform validation, app-store build/submission/release, and OTA/EAS Update compatibility/rollback.
 
 For mobile visual direction, `frontend-design` may also be selected; for version-sensitive Expo/RN APIs, add `source-driven-development`.
 
@@ -116,20 +127,11 @@ For mobile visual direction, `frontend-design` may also be selected; for version
 - **FILLED** `data-quality-frameworks` — data contracts, completeness/uniqueness/validity/consistency/freshness checks and CI/monitoring gates.
 - **FILLED** `spark-optimization` — evidence-led Spark tuning for partitioning, shuffle/skew, memory, caching, formats, and adaptive execution.
 
-Common paths:
+### Data platform
 
-```text
-batch analytics
-→ airflow-dag-patterns
-→ dbt-transformation-patterns when SQL modeling is involved
-→ data-quality-frameworks
-→ observability
+- **FILLED** `data-platform-architecture` — warehouse/lakehouse design, open table formats/catalog boundaries, lineage/governance, data contracts, retention, and reliable stream-processing state/checkpoint semantics.
 
-large-scale Spark workload
-→ pipeline/data-quality design
-→ spark-optimization only after real execution evidence exists
-→ verification
-```
+Use `kafka-event-streaming` for Kafka/schema/consumer contracts, `airflow-dag-patterns` for scheduled orchestration, `dbt-transformation-patterns` for analytics SQL modeling, and `spark-optimization` only after evidence shows a Spark performance problem.
 
 ## Standard software-development lifecycle
 
@@ -151,7 +153,7 @@ Exit: outcome, domain language, constraints, and success criteria are clear enou
 - **FILLED** `security-and-hardening` — threat-model-first secure design.
 - **WEAK** `api-design` → `api-and-interface-design`.
 - **FILLED when version-sensitive** `source-driven-development`.
-- Add specialization design skills such as `multi-cloud-architecture`, `microservices-patterns`, `saga-orchestration`, `workflow-orchestration-patterns`, `event-store-design`, `react-native-architecture`, or data-engineering skills only when the task requires them.
+- Add specialization design skills such as `multi-cloud-architecture`, `microservices-patterns`, `saga-orchestration`, `workflow-orchestration-patterns`, `event-store-design`, `kafka-event-streaming`, `react-native-architecture`, or `data-platform-architecture` only when the task requires them.
 
 Exit: relevant boundaries/contracts/data/security/platform decisions are explicit enough to plan implementation.
 
@@ -174,7 +176,7 @@ Exit: relevant boundaries/contracts/data/security/platform decisions are explici
 - **FILLED** `supabase-postgres-best-practices` for Postgres work.
 - **FILLED** `observability-and-instrumentation` when production behavior needs telemetry.
 - Execution modes: `subagent-driven-development`, `dispatching-parallel-agents`, or `executing-plans` as appropriate.
-- Add specialization implementation skills: IaC, Docker/Kubernetes/Helm/GitOps, distributed workflows/event stores, mobile, or data-engineering only when selected by the task.
+- Add only the specialization implementation skills selected by the task.
 
 ### Phase 6 — Debug failures (loopback)
 
@@ -190,7 +192,7 @@ After root cause/fix, return to the phase that failed and continue forward.
 - **FILLED** `browser-testing-with-devtools` when compatible tooling exists.
 - **WEAK** `test-strategy` → `test-gap-audit`.
 - **WEAK** `integration-contract-e2e-strategy` → `webapp-testing`.
-- Specialization-specific validation must also run: Terraform plan/tests, Helm lint/render, Kubernetes validation/dry-run, GitOps diff/reconciliation checks, saga/workflow failure-path tests, event replay/projection rebuild tests, mobile platform/device checks, DAG/dbt/data-quality/Spark checks, etc.
+- Specialization-specific validation must also run: Terraform plan/tests, Helm lint/render, Kubernetes validation/dry-run, GitOps diff/reconciliation checks, saga/workflow failure-path tests, event replay tests, Kafka contract/rebalance/retry tests, mobile platform/release tests, SBOM/signature/provenance verification, DAG/dbt/data-quality/Spark checks, data-platform lineage/checkpoint/replay checks, etc.
 
 ### Phase 8 — Review & simplify
 
@@ -201,7 +203,8 @@ After root cause/fix, return to the phase that failed and continue forward.
 ### Phase 9 — Security review
 
 - **FILLED** `security-review`.
-- Add `k8s-security-policies` for Kubernetes policy scope and relevant dependency/platform security skills for specialized systems.
+- Add `k8s-security-policies` for Kubernetes policy scope.
+- Add `software-supply-chain-security` when artifact/dependency/build trust is in scope.
 
 ### Phase 10 — Integrate & deliver
 
@@ -210,7 +213,7 @@ After root cause/fix, return to the phase that failed and continue forward.
 - **FILLED** `finishing-a-development-branch`.
 - **FILLED** `shipping-and-launch`.
 - **WEAK** `release-management` → `changelog-automation`.
-- Platform delivery may additionally use Docker/Kubernetes/Helm/GitOps/IaC/mobile-specific skills.
+- Add `software-supply-chain-security` for release SBOM/signing/provenance controls and `mobile-testing-and-release` for app-store/OTA release work.
 
 ### Phase 11 — Operate & learn
 
@@ -219,7 +222,7 @@ After root cause/fix, return to the phase that failed and continue forward.
 - **WEAK** `incident-response` → `incident-runbook-templates`.
 - **WEAK** `production-diagnosis` → `diagnosing-bugs`.
 - **WEAK** `postmortems` → `postmortem-writing`.
-- Distributed workflow/event-store systems also require stuck-workflow/saga detection, replay/rebuild procedures, and consumer/backpressure monitoring where applicable.
+- Specialized systems require their own runtime signals: consumer lag/DLQ/rebalances, workflow/saga stuck states, lineage/freshness/checkpoint health, mobile crash/update signals, and artifact-verification policy failures as applicable.
 
 ### Phase 12 — Maintain & evolve
 
@@ -252,8 +255,11 @@ Maintenance may start a new lifecycle loop for the replacement system.
 ## Fast paths
 
 ```text
-Terraform infrastructure change
-→ spec/design as needed → terraform-module-library → security → plan/verify → CI/CD/delivery
+Secure release pipeline
+→ dependency-upgrade as needed → software-supply-chain-security → CI/CD → verify attestations/signatures → shipping
+
+Kafka integration
+→ domain/event definition → kafka-event-streaming → implementation → contract/reliability tests → observability
 
 Kubernetes app packaging + GitOps
 → docker [weak] if image work is required → k8s-manifest-generator → helm-chart-scaffolding → k8s-security-policies when relevant → gitops-workflow → verify → delivery
@@ -264,17 +270,11 @@ Cross-service business transaction
 Long-running durable business process
 → workflow-orchestration-patterns → activity/idempotency tests → observability → verification
 
-Event-sourced aggregate
-→ domain-modeling → event-store-design → projection/replay tests → observability
+React Native feature and release
+→ frontend-design when needed → react-native-architecture → TDD → mobile-testing-and-release → shipping
 
-React Native feature
-→ frontend-design when visual direction is needed → react-native-architecture → TDD → platform verification → release
-
-Analytics pipeline
-→ airflow-dag-patterns → dbt-transformation-patterns when analytics SQL is involved → data-quality-frameworks → observability → verification
-
-Slow Spark workload
-→ collect execution evidence → spark-optimization → data-quality verification → benchmark comparison
+Analytics/data platform
+→ data-platform-architecture when platform/storage/governance decisions are needed → airflow/dbt/data-quality/spark skills only for their actual workloads → verification/observability
 
 Major dependency upgrade
 → source-driven-development → dependency-upgrade → test/verify → release
@@ -282,4 +282,4 @@ Major dependency upgrade
 
 ## Future expansion rule
 
-Specialization tracks should grow by capability, not by collecting every framework. A `weak-skill` remains usable and is also an explicit replacement target. Every import must update this orchestrator when routing changes, the software-development index, `CATALOG.jsonl`, `SKILL_REGISTRY.md`, and provenance/license records.
+Specialization tracks should grow by capability, not by collecting every framework. A `weak-skill` remains usable and is also an explicit replacement target. Every imported skill must keep provenance/license records; Skill World original skills should record authoritative sources when built from external standards/docs. Routing changes must update this orchestrator, the software-development index, `CATALOG.jsonl`, and `SKILL_REGISTRY.md` together.
