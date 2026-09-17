@@ -66,9 +66,14 @@ Historical adoption ledger for Skill World. Popularity values are snapshots obse
 | workflow-orchestration-patterns | software-development / specialization / distributed-systems-resilience | 2026-09-17 (UTC+7) | 39.4K | 10.6K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/backend-development/skills/workflow-orchestration-patterns | Seth Hobson / `wshobson/agents` |
 | event-store-design | software-development / specialization / distributed-systems-resilience | 2026-09-17 (UTC+7) | 38.4K | 8.5K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/backend-development/skills/event-store-design | Seth Hobson / `wshobson/agents` |
 | spark-optimization | software-development / specialization / data-engineering | 2026-09-17 (UTC+7) | 39.3K | 9.2K | https://github.com/wshobson/agents/tree/4236bb91f8395b0435f1d8b8baf9e8e4c69a8620/plugins/data-engineering/skills/spark-optimization | Seth Hobson / `wshobson/agents` |
+| software-supply-chain-security | software-development / specialization / supply-chain-security | 2026-09-17 (UTC+7) | N/A | N/A | local: `skills/software-supply-chain-security/SKILL.md` | Skill World original; authoritative sources in sibling `SOURCES.md` |
+| kafka-event-streaming | software-development / specialization / messaging-streaming | 2026-09-17 (UTC+7) | N/A | N/A | local: `skills/kafka-event-streaming/SKILL.md` | Skill World original; authoritative sources in sibling `SOURCES.md` |
+| mobile-testing-and-release | software-development / specialization / mobile | 2026-09-17 (UTC+7) | N/A | N/A | local: `skills/mobile-testing-and-release/SKILL.md` | Skill World original; authoritative sources in sibling `SOURCES.md` |
+| data-platform-architecture | software-development / specialization / data-platform | 2026-09-17 (UTC+7) | N/A | N/A | local: `skills/data-platform-architecture/SKILL.md` | Skill World original; authoritative sources in sibling `SOURCES.md` |
 
 ## Sources for popularity snapshots
 
 - Repository stars: GitHub/skills.sh repository metadata observed on the import date.
 - Skill installs: skills.sh pages observed on the import date.
 - Metrics are intentionally frozen historical snapshots and should not be silently rewritten later.
+- Skill World original skills use N/A for external popularity metrics and record technical standards/docs in sibling `SOURCES.md` files where relevant.
