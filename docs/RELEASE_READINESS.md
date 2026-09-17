@@ -19,17 +19,26 @@ Do not announce/tag the first public release until all required gates below are 
 
 ### MCP / product integration — required before launch
 
-The public collection should be launched together with a usable consumption path rather than asking users to reverse-engineer repository internals. Before the first promoted release:
+The private `skills-world-mcp` source implementation has now been merged as an MVP and is pinned to public Skill World commit `af9aede1e79acabe02362971da73c969a39d920f`. It includes source-level implementations for snapshot sync/validation, deterministic routing, REST/OpenAPI, Remote MCP v2, a React catalog/routing UI, GPT/MCP integration kits, and container deployment.
 
-- [ ] `skills-world-mcp` syncs the complete public repository at an exact pinned commit and validates all indexed skill paths, provenance/source records, licenses, duplicate IDs, and weak-skill metadata.
-- [ ] MCP exposes stable discovery/retrieval primitives such as domain listing, skill listing/search, task routing, skill/bundle retrieval, and provenance retrieval.
-- [ ] At least one end-to-end MCP client flow is verified against the public repository snapshot.
-- [ ] GPT/Claude/MCP setup documentation exists and uses the same canonical routing semantics as the repository.
-- [ ] The landing/catalog experience clearly distinguishes imported/adapted skills, Skill World originals, provenance, and `weak-skill` status.
-- [ ] The public repo README points to the finished MCP/integration path.
+Source-complete is **not** the same as runtime-verified. This chat environment cannot run npm installation, builds, the full vendored sync, a real MCP client, or browser validation, so those release gates remain open.
+
+Before the first promoted release:
+
+- [x] MCP source exposes stable discovery/retrieval primitives: snapshot identity, domain listing, skill listing/search, task routing, skill/bundle retrieval, and provenance retrieval.
+- [x] GPT/MCP setup documentation exists and follows the same canonical routing semantics as the public repository.
+- [x] Landing/catalog source distinguishes imported/adapted skills, Skill World originals, provenance/source records, and `weak-skill` status.
+- [x] Private runtime tests are wired to consume the public `tests/routing/ROUTING_EVALS.jsonl` contract from the pinned snapshot.
+- [ ] Run `skills-world-mcp` full exact-commit sync and validate all indexed skill paths, provenance/source records, licenses, duplicate IDs, and weak-skill metadata.
+- [ ] Install dependencies and generate/commit reproducible package lockfiles for server and web.
+- [ ] Run server/web typecheck, tests, and production builds successfully.
+- [ ] Verify at least one end-to-end Remote MCP client flow against the pinned public repository snapshot.
+- [ ] Verify the web product in a browser, including deep links, responsive layout, keyboard navigation, and source/provenance presentation.
+- [ ] Deploy the MCP/web product over HTTPS and verify Host/origin configuration plus streaming behavior.
+- [ ] Update the public README with the finished public MCP/integration URL once that endpoint is actually available.
 
 ## Release decision
 
-When every required gate is satisfied, create a release candidate from a known `main` commit, rerun repository validation plus routing evaluations, verify the MCP product is pinned to that same commit, then tag the first public version (for example `v0.1.0`).
+When every required gate is satisfied, create a release candidate from a known public `main` commit, rerun repository validation plus routing evaluations, verify the deployed MCP product reports that same commit through its snapshot metadata, then tag the first public version (for example `v0.1.0`).
 
 Until then, treat `main` as public-but-prelaunch development rather than a formally launched compatibility contract.
