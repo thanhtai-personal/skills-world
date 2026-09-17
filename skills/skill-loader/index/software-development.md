@@ -101,13 +101,18 @@ These are conditional overlays on the lifecycle, not separate bypass routes.
 - `workflow-orchestration-patterns` → `skills/workflow-orchestration-patterns/SKILL.md` — Seth Hobson / `wshobson/agents`
 - `event-store-design` → `skills/event-store-design/SKILL.md` — Seth Hobson / `wshobson/agents`
 
-## Dependency / supply chain
+## Supply chain security
 - `dependency-upgrade` → `skills/dependency-upgrade/SKILL.md` — Seth Hobson / `wshobson/agents`
-- supporting: `security-and-hardening`, `security-review`
-- current gap: dedicated SBOM/artifact-signing/provenance governance is not yet represented by a dedicated leaf.
+- `software-supply-chain-security` → `skills/software-supply-chain-security/SKILL.md` — Skill World original; covers SBOM, SCA, artifact signing/verification, provenance/attestations, and SLSA-oriented build controls.
+- supporting: `security-and-hardening`, `security-review`, `ci-cd-and-automation`
+
+## Messaging / streaming
+- `kafka-event-streaming` → `skills/kafka-event-streaming/SKILL.md` — Skill World original; covers Kafka topic/key/partition design, schema registry/evolution, consumer reliability, and event contracts/AsyncAPI.
+- supporting: `microservices-patterns`, `saga-orchestration`, `event-store-design`, `observability-and-instrumentation` as needed.
 
 ## Mobile
 - `react-native-architecture` → `skills/react-native-architecture/SKILL.md` — Seth Hobson / `wshobson/agents`
+- `mobile-testing-and-release` → `skills/mobile-testing-and-release/SKILL.md` — Skill World original; covers layered mobile testing, app-store build/submission/release, and safe OTA/EAS Update compatibility/rollback.
 
 ## Data engineering
 - `airflow-dag-patterns` → `skills/airflow-dag-patterns/SKILL.md` — Seth Hobson / `wshobson/agents`
@@ -115,8 +120,12 @@ These are conditional overlays on the lifecycle, not separate bypass routes.
 - `data-quality-frameworks` → `skills/data-quality-frameworks/SKILL.md` — Seth Hobson / `wshobson/agents`
 - `spark-optimization` → `skills/spark-optimization/SKILL.md` — Seth Hobson / `wshobson/agents`
 
+## Data platform
+- `data-platform-architecture` → `skills/data-platform-architecture/SKILL.md` — Skill World original; covers warehouse/lakehouse architecture, lineage/governance, and streaming-processing state/guarantees.
+- supporting: `kafka-event-streaming`, `airflow-dag-patterns`, `dbt-transformation-patterns`, `data-quality-frameworks`, `spark-optimization` as needed.
+
 ## Meta
 - `writing-skills` → `skills/writing-skills/SKILL.md` — Jesse Vincent / obra
 - `using-superpowers` → `skills/using-superpowers/SKILL.md` — Jesse Vincent / obra
 
-Every imported leaf keeps a sibling `PROVENANCE.md`. Weak skills remain fully loadable leaves and explicit improvement targets.
+Every imported leaf keeps a sibling `PROVENANCE.md`. Skill World original leaves may keep a sibling `SOURCES.md` when based on external standards/docs. Weak skills remain fully loadable leaves and explicit improvement targets.
